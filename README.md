@@ -11,12 +11,5 @@ NodeJS, React, Express
 ### 프로젝트 생성
 예제로 아래 페이지를 따라하고 있음
 https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-d8cec9567871
-<pre> 
-yarn add react react-dom typescript
-yarn add --dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime @babel/polyfill @babel/preset-env @babel/preset-typescript @types/react @types/react-dom @types/react @types/react-dom tslint
 
-node_modules/.bin/tsc --init
-
-yarn add --dev webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader ts-loader
-
-</pre>
+./history/step1.md 참조
