@@ -1,3 +1,46 @@
+### 프로젝트 생성
+예제로 아래 페이지를 따라하고 있음
+https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-d8cec9567871
+
+####명령어
+<pre> 
+1) dependency 추가함
+yarn add express
+yarn add --dev webpack-dev-middleware webpack-hot-middleware webpack-node-externals @types/express @types/webpack-dev-middleware @types/webpack-hot-middleware @types/webpack-env
+</pre>
+
+#### 폴더구조
+<pre>
+프로젝트 폴더
+ - dist
+ - public
+    * index_dev.html
+ - src
+    - components
+      * Footer.tsx
+      * Header.tsx
+    - pages
+      * Home.tsx
+      * News.tsx
+    * App.tsx
+    * index.tsx
+    * server.tsx
+* babel.config.js
+* package.json
+* tsconfig.json
+* wepack.config.js
+* webpack.dev.js
+* yarn.lock
+</pre>
+
+
+#### 파일 내용
+
+1. server.tsx 추가됨
+2. webpack.server.js 추가됨
+3. webpack.client.js 추가됨
+4. package.json 
+<pre>
 {
   "dependencies": {
     "express": "^4.17.1",
@@ -44,3 +87,4 @@
     "build:client": "webpack --env=client --progress --profile --colors"
   }
 }
+</pre>
