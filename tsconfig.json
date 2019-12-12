@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "preserve",
+    "sourceMap": true,
+    "outDir": "./ts-dist",
+    
+    "strict": true,
+    "noImplicitAny": true,
+    
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "alwaysShowRuleFailuresAsWarnings": false,
+        "ignoreDefinitionFiles": true,
+        "configFile": "./tslint.json",
+        "suppressWhileTypeErrorsPresent": false,
+        "mockTypeScriptVersion": false
+      }
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
