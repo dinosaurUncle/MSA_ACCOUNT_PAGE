@@ -1,6 +1,7 @@
 import path from 'path';
 import React from 'react';
 import express from 'express';
+import { makeStyles } from '@material-ui/core/styles';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -29,23 +30,35 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(express.static(path.resolve(__dirname)));
-
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 app.get('*', (req, res) => {
   const context = {};
-
+  let value = true;
   const html = renderToString(
     <StaticRouter location={req.url} context={context}>
-      <App />
+      <App isLogin={value} useStyles={useStyles} />
     </StaticRouter>,
   );
 
   const helmet = Helmet.renderStatic();
-
+  
   res.set('content-type', 'text/html');
   res.send(`
     <!DOCTYPE html>
       <html lang="en">
         <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <meta name="viewport" content="width=device-width, user-scalable=no">
           <meta name="google" content="notranslate">
           ${helmet.title.toString()}

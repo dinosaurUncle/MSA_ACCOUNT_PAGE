@@ -1,7 +1,54 @@
+### 프로젝트 생성
+예제로 아래 페이지를 따라하고 있음
+https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-d8cec9567871
+
+####명령어
+<pre> 
+1) dependency 추가함
+yarn add @material-ui/core
+yarn add @material-ui/icons
+
+2) 폰트 추가(html의 head 부분에 추가함)
+< link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" / >
+
+3) 아이콘 추가
+< link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" / >
+</pre>
+
+#### 폴더구조
+<pre>
+프로젝트 폴더
+ - dist
+ - public
+    * index_dev.html
+ - src
+    - components
+      * Footer.tsx
+      * Header.tsx
+    - pages
+      * Home.tsx
+      * News.tsx
+    * App.tsx
+    * index.tsx
+    * server.tsx
+* babel.config.js
+* package.json
+* tsconfig.json
+* wepack.config.js
+* webpack.dev.js
+* yarn.lock
+</pre>
+
+
+#### 파일 내용
+
+1. server.tsx 추가됨
+2. webpack.server.js 추가됨
+3. webpack.client.js 추가됨
+4. package.json 
+<pre>
 {
   "dependencies": {
-    "@material-ui/core": "^4.7.2",
-    "@material-ui/icons": "^4.5.1",
     "express": "^4.17.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -46,3 +93,4 @@
     "build:client": "webpack --env=client --progress --profile --colors"
   }
 }
+</pre>
