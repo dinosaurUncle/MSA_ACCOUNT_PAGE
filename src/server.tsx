@@ -1,11 +1,9 @@
 import path from 'path';
 import React from 'react';
 import express from 'express';
-import { makeStyles } from '@material-ui/core/styles';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
-
 import App from './App';
 
 const app = express();
@@ -28,25 +26,14 @@ if (process.env.NODE_ENV !== 'production') {
 
   app.use(webpackHotMiddleware(compiler));
 }
-
 app.use(express.static(path.resolve(__dirname)));
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+
 app.get('*', (req, res) => {
   const context = {};
   let value = true;
   const html = renderToString(
     <StaticRouter location={req.url} context={context}>
-      <App isLogin={value} useStyles={useStyles} />
+      <App isLogin={value} />
     </StaticRouter>,
   );
 

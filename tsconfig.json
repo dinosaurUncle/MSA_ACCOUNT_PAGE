@@ -5,14 +5,14 @@
     "jsx": "preserve",
     "sourceMap": true,
     "outDir": "./ts-dist",
-    
+    "lib": ["es6", "dom"],
     "strict": true,
     "noImplicitAny": true,
-    
+    "noImplicitThis": true,
     "moduleResolution": "node",
     "baseUrl": "./",
     "esModuleInterop": true,
-    
+    "strictNullChecks": true,
     "plugins": [
       {
         "name": "typescript-tslint-plugin",
