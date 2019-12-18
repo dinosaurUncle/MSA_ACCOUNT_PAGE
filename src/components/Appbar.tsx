@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import { Link } from 'react-router-dom';
+import IconMenu from './IconMenu'
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -51,12 +51,13 @@ class Appbar extends Component<AppbarProps> {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start"  color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconMenu />
+            
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             {titleDiv(title)}
           </Typography>
-            <Button color="inherit">Login<Link to="/login"></Link></Button>
+            <Button color="inherit" href="login">Login</Button>
         </Toolbar>
       </AppBar>
     </div>;
@@ -79,6 +80,7 @@ class Appbar extends Component<AppbarProps> {
     return (
       <div>
         {content}
+        
         <Helmet>
           <title>App</title>
         </Helmet>

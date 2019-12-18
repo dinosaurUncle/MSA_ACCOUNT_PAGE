@@ -1,5 +1,6 @@
 
 import AppBar  from '../components/Appbar'
+import Helmet from 'react-helmet';
 import React, { Component } from 'react';
 
 
@@ -15,8 +16,10 @@ class Login extends Component<LoginProps>{
     
     return (
       <div> 
+        <Helmet>
           <title>Login</title>
-          <AppBar title={"Login"} isLoginPage={false} />  
+        </Helmet>
+        <AppBar title={"Login"} isLoginPage={false} />  
       </div>
     );
   }
