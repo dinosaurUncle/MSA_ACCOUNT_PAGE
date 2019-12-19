@@ -33,3 +33,4 @@ https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD
 
 1. Appbar 오른쪽 끝에 Login 버튼의 
 2. 좌측에 아이콘 메뉴 추가
+3. Window, Header, Body, Footer로 전체 페이지 구조적으로 정리

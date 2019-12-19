@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component} from 'react';
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
@@ -7,7 +7,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { Link } from 'react-router-dom';
 import SendIcon from '@material-ui/icons/Send';
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import MenuIcon from '@material-ui/icons/Menu';

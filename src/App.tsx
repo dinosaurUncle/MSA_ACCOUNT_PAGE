@@ -1,29 +1,10 @@
 import { Route, Switch } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import React, { Component } from 'react';
-import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import Window from './components/Window';
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import News from './pages/News';
-import Header from './components/Header';
-import Footer from './components/Footer';
 
-const styles = (theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1
-        },
-        menuButton: {
-          marginRight: theme.spacing(2),
-        },
-        title: {
-          flexGrow: 1,
-        },
-    });
 
-export interface AppProps extends WithStyles<typeof styles> {
+export interface AppProps {
   isLogin?: boolean
 }
 
@@ -31,27 +12,21 @@ export interface AppProps extends WithStyles<typeof styles> {
 class App extends Component<AppProps> {
 
   render() {
-    const {classes} = this.props;
     let menu : any = null;
     let element : any = null;
     let pathValue : String = 'null';
     
       element = <Switch>
-      <Route exact path="/" render={() => <Home />} />
-      <Route path="/news" render={() => <News />} />
-      <Route path="/login" render={() => <Login />} />
+      <Route exact path="/" render={() => <Window pageName="Home" pageTitle="Home" />} />
+      <Route path="/news" render={() => <Window pageName="News" pageTitle="News" />} />
+      <Route path="/login" render={() => <Window pageName="Login" pageTitle="Login" />} />
       </Switch>;
     return (
       <div>
-        
-        <Helmet>
-          <title>App</title>
-        </Helmet>
           {element}
-        <Footer />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(App);
+export default App;

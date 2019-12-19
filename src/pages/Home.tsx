@@ -1,23 +1,16 @@
 
-import AppBar  from '../components/Appbar'
 import React, { Component } from 'react';
-
-
-export interface HomeProps {
-}
+export interface HomeProps {}
+export interface HomeStates {}
 
 
 class Home extends Component<HomeProps>{
 
-  
-  render() {
-    
+  render() {  
     
     return (
       <div> 
-          <title>App</title>
-          <AppBar title={"Home"} isLoginPage={true} /> 
-          <div>안녕</div> 
+          <div>welcome to Home</div> 
       </div>
     );
   }
