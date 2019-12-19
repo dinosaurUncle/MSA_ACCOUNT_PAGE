@@ -10,9 +10,11 @@ https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD
     * index_dev.html
  - src
     - components
-      * Appbar.tsx
+      * Body.tsx
       * Footer.tsx
       * Header.tsx
+      * IconMenu.tsx
+      * Window.tsx
     - pages
       * Home.tsx
       * Login.tsx
