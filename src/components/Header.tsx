@@ -1,23 +1,24 @@
-
-import Helmet from 'react-helmet';
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import IconMenu from './IconMenu'
+import IconMenu from './IconMenu';
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import lightBlue from '@material-ui/core/colors/lightBlue';
 
 const styles = (theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1
         },
-        menuButton: {
-          marginRight: theme.spacing(2),
+        loginTitle : {
+          textAlign: "center",
+          flexGrow: 1,
         },
         title: {
           flexGrow: 1,
@@ -42,16 +43,13 @@ class Appbar extends Component<AppbarProps> {
 
   render() {
     const {classes, title, isLogin, isLoginPage} = this.props;
-    
-    
-
     let content: any = null;
     if (!isLoginPage) {
       content = <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar  >
           <IconButton edge="start"  color="inherit" aria-label="menu">
-          <IconMenu />
+          <IconMenu title={title} />
             
           </IconButton>
           <Typography variant="h6" className={classes.title}>
@@ -63,12 +61,11 @@ class Appbar extends Component<AppbarProps> {
     </div>;
     } else {
       content = <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: '#03a9f4'}} >
         <Toolbar>
-          <IconButton edge="start"  color="inherit" aria-label="menu">
-            <IconMenu />
+          <IconButton edge="start"  color="default" aria-label="menu">
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.loginTitle}>
             {titleDiv(title)}
           </Typography>
         </Toolbar>

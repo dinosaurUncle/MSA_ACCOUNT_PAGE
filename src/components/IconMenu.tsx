@@ -25,7 +25,8 @@ const StyledMenuItem = (theme: Theme) =>
     });
 
 export interface IconMenuProps extends WithStyles<typeof StyledMenuItem> {
-  menuProps?:MenuProps
+  menuProps?:MenuProps,
+  title?: string
 }
 
 
@@ -61,7 +62,7 @@ class IconMenu extends Component<IconMenuProps> {
   }
   
   render() {
-    const {classes, menuProps} = this.props;
+    const {classes, menuProps, title} = this.props;
     let {isCheck} = this.state;
     
     
@@ -93,7 +94,7 @@ class IconMenu extends Component<IconMenuProps> {
           <MenuIcon />
         </Button>
         <Menu
-          elevation={0}
+          elevation={30}
           getContentAnchorEl={null}
           anchorOrigin={{
             vertical: 'bottom',
@@ -110,7 +111,7 @@ class IconMenu extends Component<IconMenuProps> {
           open={Boolean(isCheck)}
           onClose={handleClose}
         >
-          <MenuItem className={classes.root} >            
+          <MenuItem className={classes.root} selected={title === "Home" ? true : false}>            
             <ListItem component="a" href="/">
               <ListItemIcon >
                 <SendIcon fontSize="small"  />
@@ -118,7 +119,7 @@ class IconMenu extends Component<IconMenuProps> {
               <ListItemText primary="Home" />
             </ListItem>
           </MenuItem>
-          <MenuItem className={classes.root}>
+          <MenuItem className={classes.root} selected={title === "News" ? true : false}>
             <ListItem component="a" href="/news">
               <ListItemIcon>
                 <InboxIcon fontSize="small" />
