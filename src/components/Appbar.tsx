@@ -66,7 +66,7 @@ class Appbar extends Component<AppbarProps> {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start"  color="inherit" aria-label="menu">
-            <MenuIcon />
+            <IconMenu />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             {titleDiv(title)}

@@ -16,7 +16,8 @@ class Home extends Component<HomeProps>{
     return (
       <div> 
           <title>App</title>
-          <AppBar title={"Home"} isLoginPage={true} />  
+          <AppBar title={"Home"} isLoginPage={true} /> 
+          <div>안녕</div> 
       </div>
     );
   }

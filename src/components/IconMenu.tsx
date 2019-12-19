@@ -5,8 +5,9 @@ import Menu, { MenuProps } from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import { Link } from 'react-router-dom';
 import SendIcon from '@material-ui/icons/Send';
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -30,34 +31,53 @@ export interface IconMenuProps extends WithStyles<typeof StyledMenuItem> {
 
 
 export interface State {
-  isCheck:boolean
+  isCheck:boolean,
+  anchorEl:any
 }
 
 class IconMenu extends Component<IconMenuProps> {
 
   setAnchorEl(input:any){
-    
+    let menuIsOpen = true;
+    console.log(input);
+    if (input === null){
+      menuIsOpen = false;
+    } else {
+
+    }
+    this.setState({
+      anchorEl:input,
+      isCheck: menuIsOpen
+    })
   }
 
+  clickToLink = (url:string) => {
+    let inputUrl = "/" + url;
+    return (<a href={inputUrl}></a>)
+  };
+
   state:State = {
-    isCheck : false
+    isCheck : false,
+    anchorEl: null
   }
   
   render() {
     const {classes, menuProps} = this.props;
     let {isCheck} = this.state;
-    let isClick:boolean = false;
+    
     
 
   const handleClick = (event:any) => {
-    console.log(isClick);
+    console.log(isCheck);
     console.log(event);
-    isClick = !isClick;
+    isCheck = !isCheck;
     this.setState({
-      isCheck :isClick
+      isCheck :isCheck
     })
     this.setAnchorEl(event.currentTarget);
   };
+
+  
 
   const handleClose = () => {
     this.setAnchorEl(null);
@@ -86,28 +106,26 @@ class IconMenu extends Component<IconMenuProps> {
           }}
           {...menuProps}
           id="customized-menu"
-          
+          anchorEl={this.state.anchorEl}
           keepMounted
           open={Boolean(isCheck)}
           onClose={handleClose}
         >
-          <MenuItem className={classes.root}>
-            <ListItemIcon>
-              <SendIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Sent mail" />
+          <MenuItem className={classes.root} >            
+            <ListItem component="a" href="/">
+              <ListItemIcon >
+                <SendIcon fontSize="small"  />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
           </MenuItem>
           <MenuItem className={classes.root}>
-            <ListItemIcon>
-              <DraftsIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
-          </MenuItem>
-          <MenuItem className={classes.root}>
-            <ListItemIcon>
-              <InboxIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Inbox"  />
+            <ListItem component="a" href="/news">
+              <ListItemIcon>
+                <InboxIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="News" />  
+            </ListItem>
           </MenuItem>
         </Menu>
       </div>

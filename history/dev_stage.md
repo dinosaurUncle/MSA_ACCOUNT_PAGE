@@ -32,4 +32,4 @@ https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD
 #### 구현 내용
 
 1. Appbar 오른쪽 끝에 Login 버튼의 
-2. 좌측에 메뉴 추가
+2. 좌측에 아이콘 메뉴 추가

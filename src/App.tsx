@@ -35,7 +35,7 @@ class App extends Component<AppProps> {
     let menu : any = null;
     let element : any = null;
     let pathValue : String = 'null';
-    menu = <Route path="/" render={() => <Header />} />;
+    
       element = <Switch>
       <Route exact path="/" render={() => <Home />} />
       <Route path="/news" render={() => <News />} />
@@ -48,7 +48,6 @@ class App extends Component<AppProps> {
           <title>App</title>
         </Helmet>
           {element}
-          {menu}
         <Footer />
       </div>
     );
