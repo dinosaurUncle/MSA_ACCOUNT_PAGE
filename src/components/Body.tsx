@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import loadable from '@loadable/component';
+import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 const Home = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Home'));
 const Login = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Login'));
 const News = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/News'));
-
 
 export interface BodyProps {
 pageName:string

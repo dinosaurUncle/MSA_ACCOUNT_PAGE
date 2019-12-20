@@ -11,6 +11,7 @@ yarn add @loadable/component
 yarn add --dev @types/loadable__component
 yarn add @loadable/webpack-plugin
 yarn add @loadable/babel-plugin
+yarn add browser-env
 
 
 2) 폰트 추가(html의 head 부분에 추가함)

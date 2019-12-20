@@ -12,11 +12,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import CSS from 'csstype';
 
-const styles = (theme: Theme) =>
+const Loginstyles = (theme: Theme) =>
     createStyles({
       paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(1),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -33,16 +34,21 @@ const styles = (theme: Theme) =>
         margin: theme.spacing(3, 0, 2),
       },
     });
-export interface LoginProps extends WithStyles<typeof styles> {}
-export interface LoginStates {}
-
+   
+export interface LoginProps extends WithStyles<typeof Loginstyles> {
+  LoginStyle?:typeof Loginstyles
+}
 
 class Login extends Component<LoginProps>{
 
+
   render() {  
     const {classes} = this.props;
-    return ( 
+    console.log('test: ', classes.avatar);
+    return (
+      <div>
     <Container component="main" maxWidth="xs">
+      <div className={classes.paper}></div>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -102,8 +108,9 @@ class Login extends Component<LoginProps>{
         </form>
       </div>
     </Container>
+    </div>
     );
   }
 }
 
-export default withStyles(styles)(Login);
+export default withStyles(Loginstyles)(Login);

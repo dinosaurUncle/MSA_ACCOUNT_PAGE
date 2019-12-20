@@ -83,7 +83,7 @@ class IconMenu extends Component<IconMenuProps> {
     this.setAnchorEl(null);
   };
     return (
-      <div>
+      <div className={classes.root}>
         <Button
           aria-controls="customized-menu"
           aria-haspopup="true"
@@ -94,7 +94,7 @@ class IconMenu extends Component<IconMenuProps> {
           <MenuIcon />
         </Button>
         <Menu
-          elevation={30}
+          elevation={1}
           getContentAnchorEl={null}
           anchorOrigin={{
             vertical: 'bottom',
