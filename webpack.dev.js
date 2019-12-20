@@ -1,16 +1,16 @@
+const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const hotMiddlewareScript = `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true`;
 
 module.exports = {
-  mode: 'development',
-  
-  entry: './src/index.tsx',
-  
-  devServer: {
-    historyApiFallback: true,
-    inline: true,
-    port: 3000,
-    hot: true,
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+
+  entry: [hotMiddlewareScript, './src/index.tsx'],
+
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
     publicPath: '/',
   },
 
@@ -29,9 +29,5 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'public/index_dev.html',
-    }),
   ],
-}
+};
