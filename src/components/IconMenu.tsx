@@ -94,7 +94,7 @@ class IconMenu extends Component<IconMenuProps> {
           <MenuIcon />
         </Button>
         <Menu
-          elevation={1}
+          elevation={30}
           getContentAnchorEl={null}
           anchorOrigin={{
             vertical: 'bottom',
