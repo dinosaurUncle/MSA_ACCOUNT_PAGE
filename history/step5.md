@@ -7,6 +7,11 @@ https://medium.com/@minoo/react-typescript-ssr-code-splitting-%ED%99%98%EA%B2%BD
 1) dependency 추가함
 yarn add @material-ui/core
 yarn add @material-ui/icons
+yarn add @loadable/component
+yarn add --dev @types/loadable__component
+yarn add @loadable/webpack-plugin
+yarn add @loadable/babel-plugin
+
 
 2) 폰트 추가(html의 head 부분에 추가함)
 < link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" / >

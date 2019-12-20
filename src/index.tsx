@@ -1,18 +1,22 @@
-import ReactDOM from 'react-dom';
+import { hydrate } from 'react-dom';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles, createStyles } from "@material-ui/core/styles";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import { loadableReady } from '@loadable/component';
 
 import App from './App';
 
-const rootElement = document.getElementById('root');
 let value = true;
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App isLogin={value} />
-  </BrowserRouter>,
-  rootElement
-);
+loadableReady(() => {
+  const rootElement = document.getElementById('root');
+  hydrate(
+    <BrowserRouter>
+      <App isLogin={value} />
+    </BrowserRouter>,
+    rootElement
+  );
+});
+
+if (module.hot) {
+  module.hot.accept();
+}

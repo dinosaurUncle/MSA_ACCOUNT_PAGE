@@ -1,29 +1,18 @@
 import { Route, Switch } from 'react-router-dom';
 import React, { Component } from 'react';
-import Window from './components/Window';
-
+import loadable from '@loadable/component';
+const Window = loadable(() => import(/* webpackChunkName: "Window" */ './components/Window'));
 
 
 export interface AppProps {
   isLogin?: boolean
 }
 
-function redirectUrl(){
-  console.log(window.location.pathname);
-  if (window.location.pathname !== "/login") {
-     location.replace("/login");
-  }
-  
-}
-
-
 class App extends Component<AppProps> {
 
   render() {
     const {isLogin} = this.props;
-    if (!isLogin) {
-      redirectUrl();
-    }
+    
     let menu : any = null;
     let element : any = null;
     let pathValue : String = 'null';

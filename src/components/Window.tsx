@@ -1,10 +1,9 @@
-
-import Header  from './Header'
-import Body from '../components/Body'
-import Footer from './Footer';
 import Helmet from 'react-helmet';
 import React, { Component } from 'react';
-
+import loadable from '@loadable/component';
+const Header = loadable(() => import(/* webpackChunkName: "Window" */ './Header'));
+const Body = loadable(() => import(/* webpackChunkName: "Window" */ './Body'));
+const Footer = loadable(() => import(/* webpackChunkName: "Window" */ './Footer'));
 
 export interface WindowProps {
   pageTitle?:string

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import News from "../pages/News";
+import loadable from '@loadable/component';
+const Home = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Home'));
+const Login = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Login'));
+const News = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/News'));
 
 
 export interface BodyProps {

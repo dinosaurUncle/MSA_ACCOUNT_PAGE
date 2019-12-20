@@ -6,10 +6,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import IconMenu from './IconMenu';
-import { createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import lightBlue from '@material-ui/core/colors/lightBlue';
+import loadable from '@loadable/component';
+const IconMenu = loadable(() => import(/* webpackChunkName: "Window" */ './IconMenu'));
 
 const styles = (theme: Theme) =>
     createStyles({
