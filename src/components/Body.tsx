@@ -5,6 +5,7 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 const Home = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Home'));
 const Login = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Login'));
 const News = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/News'));
+const SignUp = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SignUp'));
 
 export interface BodyProps {
 pageName:string
@@ -23,6 +24,8 @@ class Body extends Component<BodyProps>{
       content = (<Login />)
     } else if (pageName === "News") {
       content = (<News />)
+    } else if (pageName === "SignUp") {
+      content = (<SignUp />)
     }
     return (
       <div>

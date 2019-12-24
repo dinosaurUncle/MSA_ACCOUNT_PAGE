@@ -15,16 +15,22 @@ class App extends Component<AppProps> {
     const {isLogin, location} = this.props;
     
     let element : any = null;
-    console.log('location: ', location);
     if (location != null){
-      if (!isLogin && window.document.location.pathname !== "/login" ) {
-        window.location.replace("/login"); 
+      let pathName =  window.document.location.pathname;
+      if (!isLogin && pathName !== "/login" ) {
+        if (pathName === "/searchPassword" ){
+        } else if (pathName === "/signup") {
+        } else {
+          window.location.replace("/login"); 
+        }
+        
       }
     }
     element = <Switch>
       <Route exact path="/" render={() => <Window pageName="Home" pageTitle="Home" />} />
       <Route path="/news" render={() => <Window pageName="News" pageTitle="News" />} />
       <Route path="/login" render={() => <Window pageName="Login" pageTitle="Login" />} />
+      <Route path="/signup" render={() => <Window pageName="SignUp" pageTitle="SignUp" />} />
       </Switch>;
       
     return (
