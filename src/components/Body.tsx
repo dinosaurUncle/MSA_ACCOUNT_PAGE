@@ -6,6 +6,7 @@ const Home = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Ho
 const Login = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Login'));
 const News = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/News'));
 const SignUp = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SignUp'));
+const SearchPassword = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchPassword'));
 
 export interface BodyProps {
 pageName:string
@@ -26,6 +27,8 @@ class Body extends Component<BodyProps>{
       content = (<News />)
     } else if (pageName === "SignUp") {
       content = (<SignUp />)
+    } else if (pageName === "SearchPassword") {
+      content = (<SearchPassword />)
     }
     return (
       <div>

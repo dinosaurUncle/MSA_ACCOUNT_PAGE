@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 
-const Loginstyles = (theme: Theme) =>
+const SignUpstyles = (theme: Theme) =>
     createStyles({
       paper: {
         marginTop: theme.spacing(8),
@@ -34,11 +34,11 @@ const Loginstyles = (theme: Theme) =>
       },
     });
    
-export interface LoginProps extends WithStyles<typeof Loginstyles> {
-  LoginStyle?:typeof Loginstyles
+export interface SignUpProps extends WithStyles<typeof SignUpstyles> {
+  LoginStyle?:typeof SignUpstyles
 }
 
-class Login extends Component<LoginProps>{
+class SignUp extends Component<SignUpProps>{
 
 
   render() {  
@@ -134,4 +134,4 @@ class Login extends Component<LoginProps>{
   }
 }
 
-export default withStyles(Loginstyles)(Login);
+export default withStyles(SignUpstyles)(SignUp);

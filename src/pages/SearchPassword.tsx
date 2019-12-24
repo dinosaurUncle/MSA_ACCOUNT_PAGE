@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import CSS from 'csstype';
 
-const Loginstyles = (theme: Theme) =>
+const SearchPasswordstyles = (theme: Theme) =>
     createStyles({
       paper: {
         marginTop: theme.spacing(1),
@@ -35,11 +35,11 @@ const Loginstyles = (theme: Theme) =>
       },
     });
    
-export interface LoginProps extends WithStyles<typeof Loginstyles> {
-  LoginStyle?:typeof Loginstyles
+export interface SearchPasswordProps extends WithStyles<typeof SearchPasswordstyles> {
+  LoginStyle?:typeof SearchPasswordstyles
 }
 
-class Login extends Component<LoginProps>{
+class SearchPassword extends Component<SearchPasswordProps>{
 
 
   render() {  
@@ -55,7 +55,7 @@ class Login extends Component<LoginProps>{
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Forgot password
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -69,21 +69,6 @@ class Login extends Component<LoginProps>{
             autoComplete="email"
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -91,20 +76,8 @@ class Login extends Component<LoginProps>{
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Submit
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/searchpassword" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>
@@ -113,4 +86,4 @@ class Login extends Component<LoginProps>{
   }
 }
 
-export default withStyles(Loginstyles)(Login);
+export default withStyles(SearchPasswordstyles)(SearchPassword);

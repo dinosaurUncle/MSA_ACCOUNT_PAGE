@@ -18,7 +18,7 @@ class App extends Component<AppProps> {
     if (location != null){
       let pathName =  window.document.location.pathname;
       if (!isLogin && pathName !== "/login" ) {
-        if (pathName === "/searchPassword" ){
+        if (pathName === "/searchpassword" ){
         } else if (pathName === "/signup") {
         } else {
           window.location.replace("/login"); 
@@ -31,6 +31,7 @@ class App extends Component<AppProps> {
       <Route path="/news" render={() => <Window pageName="News" pageTitle="News" />} />
       <Route path="/login" render={() => <Window pageName="Login" pageTitle="Login" />} />
       <Route path="/signup" render={() => <Window pageName="SignUp" pageTitle="SignUp" />} />
+      <Route path="/searchpassword" render={() => <Window pageName="SearchPassword" pageTitle="SearchPassword" />} />
       </Switch>;
       
     return (
