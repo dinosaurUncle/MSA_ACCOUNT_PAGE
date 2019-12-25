@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
@@ -12,6 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import { Redirect } from 'react-router-dom';
 
 const SignUpstyles = (theme: Theme) =>
     createStyles({
@@ -33,13 +34,64 @@ const SignUpstyles = (theme: Theme) =>
         margin: theme.spacing(3, 0, 2),
       },
     });
+
+const test = () =>{
+  alert('test');
+}
    
 export interface SignUpProps extends WithStyles<typeof SignUpstyles> {
   LoginStyle?:typeof SignUpstyles
+  formAction?:any
 }
+
+export interface State {
+  description:any
+}
+const map = new Map<string, any>();
+const mapToJson = () => {
+  return JSON.stringify(Array.from(map.entries()));
+}
+
+
 
 class SignUp extends Component<SignUpProps>{
 
+  state:State = {
+    description: null
+  }
+
+  onChange(e: React.ChangeEvent<HTMLTextAreaElement>){
+    map.set(e.currentTarget.name, e.currentTarget.value);
+  }
+
+  onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    console.log('e1: ' ,e.currentTarget.name);
+    e.preventDefault();
+    console.log(map);
+    
+    let jsonData = {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(Array.from(map.entries()))};
+      console.log(jsonData);
+
+      fetch('/', jsonData);
+      window.location.replace("/");
+    
+/*
+    fetch(this.props.formAction, {
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({description: this.state.description})
+  });
+*/
+  
+  }
 
   render() {  
     const {classes} = this.props;
@@ -55,7 +107,7 @@ class SignUp extends Component<SignUpProps>{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate action={"/"} method="POST" onSubmit={this.onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -66,6 +118,7 @@ class SignUp extends Component<SignUpProps>{
                 fullWidth
                 id="firstName"
                 label="First Name"
+                onChange={this.onChange}
                 autoFocus
               />
             </Grid>
@@ -77,6 +130,7 @@ class SignUp extends Component<SignUpProps>{
                 id="lastName"
                 label="Last Name"
                 name="lastName"
+                onChange={this.onChange}
                 autoComplete="lname"
               />
             </Grid>
@@ -88,6 +142,7 @@ class SignUp extends Component<SignUpProps>{
                 id="email"
                 label="Email Address"
                 name="email"
+                onChange={this.onChange}
                 autoComplete="email"
               />
             </Grid>
@@ -100,6 +155,7 @@ class SignUp extends Component<SignUpProps>{
                 label="Password"
                 type="password"
                 id="password"
+                onChange={this.onChange}
                 autoComplete="current-password"
               />
             </Grid>

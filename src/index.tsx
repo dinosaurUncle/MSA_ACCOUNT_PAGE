@@ -5,7 +5,7 @@ import { loadableReady } from '@loadable/component';
 
 import App from './App';
 
-let value = false;
+let value = true;
 
 loadableReady(() => {
   const rootElement = document.getElementById('root');

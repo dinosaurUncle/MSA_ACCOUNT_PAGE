@@ -5,8 +5,10 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { ChunkExtractor } from '@loadable/server';
+import bodyParser from 'body-parser'
 
 const app = express();
+app.use(bodyParser.json())
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
@@ -29,7 +31,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(express.static(path.resolve(__dirname)));
 
+app.post('*', (req, res) => {
+  console.log('post_req_body: ', req.body);
+  res.redirect('/');
+}); 
+
 app.get('*', (req, res) => {
+  console.log('log: ' + req.url);
   const nodeStats = path.resolve(__dirname, './node/loadable-stats.json');
   const webStats = path.resolve(__dirname, './web/loadable-stats.json');
   const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats });
