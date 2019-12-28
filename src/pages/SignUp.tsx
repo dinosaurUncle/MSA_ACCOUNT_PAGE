@@ -53,18 +53,27 @@ export interface SignUpProps extends WithStyles<typeof SignUpstyles> {
 
 export interface State {
   description:any
+  jsonData?:any
 }
-const map = new Map<any, any>();
-const mapToJson = () => {
-  return JSON.stringify(Array.from(map.entries()));
+
+export interface Account {
+  id: string
+  name : string
+  password : string
+  gender : string
+  email : string
+  phone : string
 }
+
+const map = new Map< string | undefined, any>();
 
 
 
 class SignUp extends Component<SignUpProps>{
 
   state:State = {
-    description: null
+    description: null,
+    jsonData: null
   }
 
   onChange(e: React.ChangeEvent<HTMLTextAreaElement>){
@@ -72,40 +81,43 @@ class SignUp extends Component<SignUpProps>{
     map.set(e.currentTarget.name, e.currentTarget.value);
   }
   onSetValue(e: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>){
+    e.target.name
     map.set(e.target.name, e.target.value);
-  }
-  onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    console.log('e1: ' ,e.currentTarget.name);
-    e.preventDefault();
-    console.log(map);
-    
-    let jsonData = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(Array.from(map.entries()))};
-      console.log(jsonData);
-
-      fetch('/', jsonData);
-      window.location.replace("/");
-    
-/*
-    fetch(this.props.formAction, {
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({description: this.state.description})
-  });
-*/
-  
   }
 
   render() {  
     const {classes} = this.props;
-    
+    const onSubmit =
+    (e: React.FormEvent<HTMLFormElement>) => {
+      console.log('e1: ' ,e.currentTarget.name);
+      e.preventDefault();
+      console.log(map);
+
+      let convertJson : Account = {
+        id : map.get('id'),
+        name : map.get('name'),
+        password : map.get('password'),
+        gender : map.get('gender'),
+        email : map.get('email'),
+        phone : map.get('phone')
+      };
+      let jsonData = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(convertJson)};
+        console.log(jsonData);
+        this.setState({
+          jsonData: jsonData
+        })
+        fetch('/postAcount', jsonData)
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+        
+    }
     return (
       <div>
     <Container component="main" maxWidth="xs">
@@ -117,7 +129,7 @@ class SignUp extends Component<SignUpProps>{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate action={"/"} method="POST" onSubmit={this.onSubmit}>
+        <form className={classes.form} name="accountJoin" noValidate action={"/postAcount"} method="POST" onSubmit={onSubmit}>
           <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
               <TextField
@@ -169,8 +181,8 @@ class SignUp extends Component<SignUpProps>{
                   name="gender"
                   onChange={this.onSetValue}>
 
-                  <MenuItem value={0}>남</MenuItem>
-                  <MenuItem value={1}>여</MenuItem>
+                  <MenuItem value={'MALE'}>남</MenuItem>
+                  <MenuItem value={'FEMALE'}>여</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

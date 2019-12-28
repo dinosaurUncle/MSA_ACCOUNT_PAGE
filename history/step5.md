@@ -13,6 +13,9 @@ yarn add @loadable/webpack-plugin
 yarn add @loadable/babel-plugin
 yarn add browser-env
 yarn add body-parser
+yarn add axios
+yarn add request
+yarn add @types/request
 
 
 2) 폰트 추가(html의 head 부분에 추가함)
