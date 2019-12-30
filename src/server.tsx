@@ -7,9 +7,23 @@ import Helmet from 'react-helmet';
 import { ChunkExtractor } from '@loadable/server';
 import bodyParser from 'body-parser'
 import http from 'http';
-import request from 'request';
+import request from 'sync-request';
+import HTTPMethod from 'http-method-enum';
 
-
+function ServerApiCall(req: any, domain: string, method:HTTPMethod){
+  let result =null;
+  const PORT = '8089';
+  const HOST = 'http://localhost';
+  let url = HOST + ":" + PORT + domain;
+  let bodyData = {};
+  if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
+    bodyData = {json: req.body}
+  }
+  let post_request = request(method, url, bodyData)
+  result = JSON.parse(post_request.getBody('utf8'));
+  console.log('ServerApiCall result: ', result);
+  return result;
+}
 
 const app = express();
 app.use(bodyParser.json())
@@ -34,37 +48,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(express.static(path.resolve(__dirname)));
-
-
-app.post('/postAcount', (req, res) => {
-  console.log('post_req_body: ', req.body);
-  console.log("json.body.name: " + req.body.name );
-  let post_options = {
-    headers: {'Content-Type': 'application/json'},
-    url: '',
-    body: JSON.stringify(req.body)
-  };
-  let result =null;
-  const PORT = '8080';
-  const BASE_PATH = '/account';
-  const HOST = 'http://localhost';
-  post_options.url = HOST + ":" + PORT + BASE_PATH;
-  console.log('post_options: ' + post_options);
-  let post_request = request.post(post_options, function(err, response, resultData){
-    switch (err) {
-      case 200:
-        console.log("state 200: ",JSON.parse(resultData));
-        result = resultData;
-        return JSON.parse(resultData);
-      default:
-        console.log("state error: ",JSON.parse(resultData));
-        result = resultData;
-        return JSON.parse(resultData);
-    }
-  });
-  console.log('post_request: ', post_request);
-  res.json(result);
-});
 
 app.get('*', (req, res) => {
   console.log('log: ' + req.url);
@@ -105,3 +88,18 @@ app.get('*', (req, res) => {
 });
 
 app.listen(3003, () => console.log('Server started http://localhost:3003'));
+
+/**
+ * 2019/12/30
+ * API 통신 컨트롤러
+ */
+
+ // 1. 유효성검사
+ app.post('/isId', (req, res) => {
+  res.json(ServerApiCall(req, '/account/isId/' + req.body.id, HTTPMethod.GET));
+});
+
+// 2. 회원가입
+app.post('/postAcount', (req, res) => {
+  res.json(ServerApiCall(req, '/account', HTTPMethod.POST));
+});

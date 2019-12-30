@@ -16,6 +16,7 @@ yarn add body-parser
 yarn add axios
 yarn add request
 yarn add @types/request
+yarn add sync-request
 
 
 2) 폰트 추가(html의 head 부분에 추가함)
@@ -58,13 +59,25 @@ yarn add @types/request
 <pre>
 {
   "dependencies": {
+    "@loadable/babel-plugin": "^5.11.0",
+    "@loadable/component": "^5.10.2",
+    "@loadable/server": "^5.10.2",
+    "@loadable/webpack-plugin": "^5.7.1",
     "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",
+    "@types/loadable__server": "^5.9.1",
+    "@types/request": "^2.48.4",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "browser-env": "^3.3.0",
     "express": "^4.17.1",
+    "global": "^4.4.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-router-dom": "^5.1.2",
+    "request": "^2.88.0",
+    "sync-request": "^6.1.0",
     "typescript": "^3.7.3"
   },
   "devDependencies": {
@@ -78,6 +91,7 @@ yarn add @types/request
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.4",
     "@types/express": "^4.17.2",
+    "@types/loadable__component": "^5.10.0",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
     "@types/react-helmet": "^5.0.14",
@@ -95,7 +109,7 @@ yarn add @types/request
     "webpack-dev-server": "^3.9.0",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-node-externals": "^1.7.2"
-  },
+  }
   "scripts": {
     "start": "yarn build:dev && node ./dist/server.js",
     "start:wds": "webpack-dev-server --env=dev --profile --colors",

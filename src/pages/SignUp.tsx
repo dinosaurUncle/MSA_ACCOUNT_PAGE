@@ -37,6 +37,9 @@ const SignUpstyles = (theme: Theme) =>
       submit: {
         margin: theme.spacing(3, 0, 2),
       },
+      validation: {
+        margin: theme.spacing(1, 1, 1),
+      },
       formControl: {
         margin: theme.spacing(1),
         minWidth: "100%",
@@ -54,6 +57,7 @@ export interface SignUpProps extends WithStyles<typeof SignUpstyles> {
 export interface State {
   description:any
   jsonData?:any
+  isDisableSubmit?:boolean
 }
 
 export interface Account {
@@ -73,7 +77,8 @@ class SignUp extends Component<SignUpProps>{
 
   state:State = {
     description: null,
-    jsonData: null
+    jsonData: null,
+    isDisableSubmit: true,
   }
 
   onChange(e: React.ChangeEvent<HTMLTextAreaElement>){
@@ -118,6 +123,65 @@ class SignUp extends Component<SignUpProps>{
         .catch(err => console.log(err));
         
     }
+    const changeSubmitState = (promiseInput: any) => {
+      console.log('promiseInput: ', promiseInput);
+    }
+
+    const checkId =
+    () => {
+
+      let convertJson : Account = {
+        id : map.get('id'),
+        name : "",
+        password : "",
+        gender : "",
+        email : "",
+        phone : ""
+      };
+      console.log('convertJson.id: ' + convertJson.id);
+      console.log('convertJson.id.trim(): ' + convertJson.id.trim());
+      if (convertJson.id == null || convertJson.id == undefined){
+        alert('id가 입력되지 않았습니다')
+        return;
+      } else if (convertJson.id.trim() === '') {
+        alert('id가 비어있습니다')
+        return;
+      }
+      let jsonData = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(convertJson)};
+        this.setState({
+          jsonData: jsonData
+        })
+        fetch('/isId', jsonData)
+        .then(res => 
+        {
+          res.json().then(
+            data => {
+            let result = JSON.stringify(data);
+            this.setState({
+              isDisableSubmit: JSON.parse(result).isId
+            })
+            }
+          )
+          console.log();
+        })
+        .then(json => 
+        {
+          console.log('isId - json');
+          console.log(json)
+        })
+        .catch(err => 
+        {
+          console.log('isId - err');
+          console.log(err)
+        });
+    }
+
     return (
       <div>
     <Container component="main" maxWidth="xs">
@@ -131,7 +195,7 @@ class SignUp extends Component<SignUpProps>{
         </Typography>
         <form className={classes.form} name="accountJoin" noValidate action={"/postAcount"} method="POST" onSubmit={onSubmit}>
           <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={8}>
               <TextField
                 autoComplete="id"
                 name="id"
@@ -144,7 +208,16 @@ class SignUp extends Component<SignUpProps>{
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              onClick={checkId}
+              className={classes.validation}
+            >
+              Check Id
+            </Button>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="name"
                 name="name"
@@ -222,6 +295,7 @@ class SignUp extends Component<SignUpProps>{
             fullWidth
             variant="contained"
             color="primary"
+            disabled={this.state.isDisableSubmit}
             className={classes.submit}
           >
             Sign Up
