@@ -7,8 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
@@ -16,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import { Redirect } from 'react-router-dom';
+import Modal from '@material-ui/core/Modal';
 
 const SignUpstyles = (theme: Theme) =>
     createStyles({
@@ -44,6 +42,14 @@ const SignUpstyles = (theme: Theme) =>
         margin: theme.spacing(1),
         minWidth: "100%",
       },
+      modalPaper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
     });
 const test = () =>{
   alert('test');
@@ -58,6 +64,9 @@ export interface State {
   description:any
   jsonData?:any
   isDisableSubmit?:boolean
+  open:boolean
+  id:string
+  isPass:string
 }
 
 export interface Account {
@@ -79,6 +88,9 @@ class SignUp extends Component<SignUpProps>{
     description: null,
     jsonData: null,
     isDisableSubmit: true,
+    open: false,
+    id:'',
+    isPass:''
   }
 
   onChange(e: React.ChangeEvent<HTMLTextAreaElement>){
@@ -90,8 +102,22 @@ class SignUp extends Component<SignUpProps>{
     map.set(e.target.name, e.target.value);
   }
 
+  setOpen(input:boolean){
+    this.setState({
+      open: input
+    })
+  }
+
   render() {  
     const {classes} = this.props;
+    const handleOpen = () => {
+      this.setOpen(true);
+    }
+
+    const handleClose = () => {
+      this.setOpen(false);
+    }
+
     const onSubmit =
     (e: React.FormEvent<HTMLFormElement>) => {
       console.log('e1: ' ,e.currentTarget.name);
@@ -118,13 +144,32 @@ class SignUp extends Component<SignUpProps>{
           jsonData: jsonData
         })
         fetch('/postAcount', jsonData)
-        .then(res => res.json())
+        .then(res => {
+          res.json().then(
+            data => {
+              let result = JSON.stringify(data);
+              let id = JSON.parse(result).account.id;
+              let state = JSON.parse(result).state;
+              this.setState({
+                id: id,
+                isPass : state,
+                open: true
+              })
+            }
+          )
+        })
         .then(json => console.log(json))
         .catch(err => console.log(err));
         
     }
     const changeSubmitState = (promiseInput: any) => {
       console.log('promiseInput: ', promiseInput);
+    }
+
+    const createAccountComplete = 
+    () => {
+      handleClose();
+      window.location.replace("/login");
     }
 
     const checkId =
@@ -188,6 +233,27 @@ class SignUp extends Component<SignUpProps>{
 
     return (
       <div>
+        <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={this.state.open}
+        onClose={handleClose}
+      >
+        <div style={{ top: '50%' , left: '50%', transform: `translate(-50%, -50%)`}} className={classes.modalPaper}>
+          <h2 id="simple-modal-title">회원가입 완료</h2>
+          <p id="simple-modal-description">
+            Id : {this.state.id} '님' {this.state.isPass === 'S' ? ('가입 완료되었습니다') : ('가입 실패했습니다')}
+          </p>
+          <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          onClick={createAccountComplete}
+          className={classes.validation}>
+            완료
+          </Button>
+        </div>
+      </Modal>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
