@@ -163,8 +163,12 @@ class SignUp extends Component<SignUpProps>{
           res.json().then(
             data => {
             let result = JSON.stringify(data);
+            let isId = JSON.parse(result).isId;
+            if (isId) {
+              alert('이미 존재하는 아이디 입니다');
+            }
             this.setState({
-              isDisableSubmit: JSON.parse(result).isId
+              isDisableSubmit: isId
             })
             }
           )
@@ -195,7 +199,7 @@ class SignUp extends Component<SignUpProps>{
         </Typography>
         <form className={classes.form} name="accountJoin" noValidate action={"/postAcount"} method="POST" onSubmit={onSubmit}>
           <Grid container spacing={2}>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={8} >
               <TextField
                 autoComplete="id"
                 name="id"
@@ -228,6 +232,7 @@ class SignUp extends Component<SignUpProps>{
                 label="Name"
                 onChange={this.onChange}
                 autoFocus
+                disabled={this.state.isDisableSubmit}
               />
             </Grid>
             <Grid item xs={12}>
@@ -241,6 +246,7 @@ class SignUp extends Component<SignUpProps>{
                 id="password"
                 onChange={this.onChange}
                 autoComplete="current-password"
+                disabled={this.state.isDisableSubmit}
               />
             </Grid>
             <Grid item xs={12}>
@@ -252,8 +258,8 @@ class SignUp extends Component<SignUpProps>{
                   fullWidth
                   value={null}
                   name="gender"
-                  onChange={this.onSetValue}>
-
+                  onChange={this.onSetValue}
+                  disabled={this.state.isDisableSubmit}>
                   <MenuItem value={'MALE'}>남</MenuItem>
                   <MenuItem value={'FEMALE'}>여</MenuItem>
                 </Select>
@@ -269,6 +275,7 @@ class SignUp extends Component<SignUpProps>{
                 name="email"
                 onChange={this.onChange}
                 autoComplete="email"
+                disabled={this.state.isDisableSubmit}
               />
             </Grid>
             <Grid item xs={12}>
@@ -281,12 +288,7 @@ class SignUp extends Component<SignUpProps>{
                 name="phone"
                 onChange={this.onChange}
                 autoComplete="phone"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                disabled={this.state.isDisableSubmit}
               />
             </Grid>
           </Grid>

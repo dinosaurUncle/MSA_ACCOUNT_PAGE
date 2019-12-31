@@ -6,13 +6,12 @@ import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { ChunkExtractor } from '@loadable/server';
 import bodyParser from 'body-parser'
-import http from 'http';
 import request from 'sync-request';
 import HTTPMethod from 'http-method-enum';
 
 function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   let result =null;
-  const PORT = '8089';
+  const PORT = '8080';
   const HOST = 'http://localhost';
   let url = HOST + ":" + PORT + domain;
   let bodyData = {};
