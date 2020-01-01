@@ -34,13 +34,22 @@ const Loginstyles = (theme: Theme) =>
         margin: theme.spacing(3, 0, 2),
       },
     });
-   
+    const map = new Map< string | undefined, any>();
+    
+    export interface LoginType {
+      id: string
+      password : string
+    }    
+
 export interface LoginProps extends WithStyles<typeof Loginstyles> {
   LoginStyle?:typeof Loginstyles
 }
 
 class Login extends Component<LoginProps>{
 
+  onChange(e: React.ChangeEvent<HTMLTextAreaElement>){
+    map.set(e.currentTarget.name, e.currentTarget.value);
+  }
 
   render() {  
     const {classes} = this.props;
@@ -63,10 +72,11 @@ class Login extends Component<LoginProps>{
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="id"
+            label="Id"
+            name="id"
+            onChange={this.onChange}
+            autoComplete="Id"
             autoFocus
           />
           <TextField
@@ -78,6 +88,7 @@ class Login extends Component<LoginProps>{
             label="Password"
             type="password"
             id="password"
+            onChange={this.onChange}
             autoComplete="current-password"
           />
           <FormControlLabel

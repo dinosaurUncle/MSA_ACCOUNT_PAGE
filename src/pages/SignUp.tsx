@@ -143,11 +143,12 @@ class SignUp extends Component<SignUpProps>{
         this.setState({
           jsonData: jsonData
         })
-        fetch('/postAcount', jsonData)
+        fetch('/createAcount', jsonData)
         .then(res => {
           res.json().then(
             data => {
               let result = JSON.stringify(data);
+              console.log(JSON.parse(result));
               let id = JSON.parse(result).account.id;
               let state = JSON.parse(result).state;
               this.setState({
@@ -263,7 +264,7 @@ class SignUp extends Component<SignUpProps>{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} name="accountJoin" noValidate action={"/postAcount"} method="POST" onSubmit={onSubmit}>
+        <form className={classes.form} name="accountJoin" noValidate action={"/createAcount"} method="POST" onSubmit={onSubmit}>
           <Grid container spacing={2}>
           <Grid item xs={12} sm={8} >
               <TextField

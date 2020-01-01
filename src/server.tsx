@@ -99,6 +99,11 @@ app.listen(3003, () => console.log('Server started http://localhost:3003'));
 });
 
 // 2. 회원가입
-app.post('/postAcount', (req, res) => {
+app.post('/createAcount', (req, res) => {
   res.json(ServerApiCall(req, '/account', HTTPMethod.POST));
+});
+
+// 3. 로그인 
+app.post('/login', (req, res) => {
+  res.json(ServerApiCall(req, '/login', HTTPMethod.POST));
 });
