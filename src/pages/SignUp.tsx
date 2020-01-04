@@ -86,7 +86,6 @@ class SignUp extends Component<SignUpProps>{
 
   state:State = {
     description: null,
-    jsonData: null,
     isDisableSubmit: true,
     open: false,
     id:'',
@@ -110,9 +109,6 @@ class SignUp extends Component<SignUpProps>{
 
   render() {  
     const {classes} = this.props;
-    const handleOpen = () => {
-      this.setOpen(true);
-    }
 
     const handleClose = () => {
       this.setOpen(false);
@@ -140,9 +136,6 @@ class SignUp extends Component<SignUpProps>{
         },
         body: JSON.stringify(convertJson)};
         console.log(jsonData);
-        this.setState({
-          jsonData: jsonData
-        })
         fetch('/createAcount', jsonData)
         .then(res => {
           res.json().then(
@@ -163,9 +156,6 @@ class SignUp extends Component<SignUpProps>{
         .catch(err => console.log(err));
         
     }
-    const changeSubmitState = (promiseInput: any) => {
-      console.log('promiseInput: ', promiseInput);
-    }
 
     const createAccountComplete = 
     () => {
@@ -178,11 +168,11 @@ class SignUp extends Component<SignUpProps>{
 
       let convertJson : Account = {
         id : map.get('id'),
-        name : "",
-        password : "",
-        gender : "",
-        email : "",
-        phone : ""
+        name : map.get('name'),
+        password : map.get('password'),
+        gender : map.get('gender'),
+        email : map.get('email'),
+        phone : map.get('phone')
       };
       console.log('convertJson.id: ' + convertJson.id);
       console.log('convertJson.id.trim(): ' + convertJson.id.trim());

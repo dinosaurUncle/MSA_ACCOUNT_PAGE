@@ -53,6 +53,40 @@ class Login extends Component<LoginProps>{
 
   render() {  
     const {classes} = this.props;
+
+    const onSubmit =
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      let convertJson : LoginType = {
+        id : map.get('id'),
+        password : map.get('password')
+      };
+      let jsonData = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(convertJson)};
+        console.log(jsonData);
+        fetch('/login', jsonData)
+        .then(res => {
+          res.json().then(
+            data => {
+              let result = JSON.stringify(data);
+              console.log(JSON.parse(result));
+              let account = JSON.parse(result).account;
+              let login = JSON.parse(result).login;
+              console.log('login: ' + login);
+              console.log('account: ' + account);
+            }
+          )
+        })
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+        
+    }
     
     return (
       <div>
@@ -66,7 +100,7 @@ class Login extends Component<LoginProps>{
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} name="login" noValidate action={"/login"} method="POST" onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
