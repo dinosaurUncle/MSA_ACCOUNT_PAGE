@@ -78,8 +78,7 @@ class Login extends Component<LoginProps>{
               console.log(JSON.parse(result));
               let account = JSON.parse(result).account;
               let login = JSON.parse(result).login;
-              console.log('login: ' + login);
-              console.log('account: ' + account);
+              window.location.replace("/");
             }
           )
         })

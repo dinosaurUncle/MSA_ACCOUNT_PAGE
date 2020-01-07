@@ -8,6 +8,8 @@ import { ChunkExtractor } from '@loadable/server';
 import bodyParser from 'body-parser'
 import request from 'sync-request';
 import HTTPMethod from 'http-method-enum';
+import session from 'express-session';
+
 
 function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   let result =null;
@@ -24,6 +26,10 @@ function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   return result;
 }
 
+interface MySession extends Express.Session {
+  login: boolean;
+}
+
 const app = express();
 app.use(bodyParser.json())
 
@@ -35,6 +41,12 @@ if (process.env.NODE_ENV !== 'production') {
   const webpackHotMiddleware = require('webpack-hot-middleware');
 
   const compiler = webpack(webpackConfig);
+
+  app.use(session({
+    secret: "i-love-husky",
+    resave: false,
+    saveUninitialized: true
+   }));
 
   app.use(
     webpackDevMiddleware(compiler, {
@@ -49,17 +61,19 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(express.static(path.resolve(__dirname)));
 
 app.get('*', (req, res) => {
+  const sess = req.session as MySession;
   console.log('log: ' + req.url);
+  console.log("login: ", sess.login);
+  
   const nodeStats = path.resolve(__dirname, './node/loadable-stats.json');
   const webStats = path.resolve(__dirname, './web/loadable-stats.json');
   const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats });
   const { default: App } = nodeExtractor.requireEntrypoint();
   const webExtractor = new ChunkExtractor({ statsFile: webStats });
-
+  
   const context = {};
-  let value = true;
   const jsx = webExtractor.collectChunks(
-    <StaticRouter location={req.url} context={context}>
+    <StaticRouter location={req.url} context={context} >
       <App />
     </StaticRouter>
   );
@@ -80,6 +94,7 @@ app.get('*', (req, res) => {
         </head>
         <body>
           <div id="root">${html}</div>
+          <div style="visibility:hidden" id="session">${sess.login}</div>
           ${webExtractor.getScriptTags()}
         </body>
       </html>
@@ -104,8 +119,17 @@ app.post('/createAcount', (req, res) => {
   res.json(ServerApiCall(req, '/account', HTTPMethod.POST));
 });
 
+
+
 // 3. 로그인 
 app.post('/login', (req, res) => {
+  
+
   console.log('test2222');
-  res.json(ServerApiCall(req, '/account/login', HTTPMethod.POST));
+  let result = ServerApiCall(req, '/account/login', HTTPMethod.POST);
+  console.log('server.login: ', result.login); 
+  const sess = req.session as MySession;
+  sess.login = result.login;
+  
+  res.json(result);
 });
