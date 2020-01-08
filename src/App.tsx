@@ -17,22 +17,35 @@ class App extends Component<AppProps> {
     let element : any = null;
     if (location != null){
       let pathName =  window.document.location.pathname;
+      console.log("pathName: ", pathName);
+      console.log("isLogin: ", isLogin);
       if (!isLogin && pathName !== "/login" ) {
         if (pathName === "/searchpassword" ){
+          element = <Switch>
+        <Route path="/searchpassword" render={() => <Window pageName="SearchPassword" pageTitle="SearchPassword" />} />
+        </Switch>;
         } else if (pathName === "/signup") {
+          element = <Switch>
+        <Route path="/signup" render={() => <Window pageName="SignUp" pageTitle="SignUp" />} />
+        </Switch>;
         } else {
           window.location.replace("/login"); 
         }
-        
-      }
-    }
-    element = <Switch>
+      } else if (pathName === "/login" && isLogin) {
+        window.location.replace("/"); 
+      } else if (!isLogin && pathName === "/login" ) {
+        element = <Switch>
+        <Route path="/login" render={() => <Window pageName="Login" pageTitle="Login" />} />
+        </Switch>;
+      } else {
+        console.log('test1144444');
+        element = <Switch>
       <Route exact path="/" render={() => <Window pageName="Home" pageTitle="Home" />} />
       <Route path="/news" render={() => <Window pageName="News" pageTitle="News" />} />
-      <Route path="/login" render={() => <Window pageName="Login" pageTitle="Login" />} />
-      <Route path="/signup" render={() => <Window pageName="SignUp" pageTitle="SignUp" />} />
-      <Route path="/searchpassword" render={() => <Window pageName="SearchPassword" pageTitle="SearchPassword" />} />
       </Switch>;
+      } 
+    }
+    
       
     return (
       <div>

@@ -13,7 +13,7 @@ import session from 'express-session';
 
 function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   let result =null;
-  const PORT = '8080';
+  const PORT = '8089';
   const HOST = 'http://localhost';
   let url = HOST + ":" + PORT + domain;
   let bodyData = {};
@@ -123,13 +123,17 @@ app.post('/createAcount', (req, res) => {
 
 // 3. 로그인 
 app.post('/login', (req, res) => {
-  
-
   console.log('test2222');
   let result = ServerApiCall(req, '/account/login', HTTPMethod.POST);
   console.log('server.login: ', result.login); 
   const sess = req.session as MySession;
   sess.login = result.login;
-  
   res.json(result);
+});
+
+// 4. 로그아웃 
+app.post('/logout', (req, res) => {
+  const sess = req.session as MySession;
+  sess.login = false;
+  res.json(null);
 });
