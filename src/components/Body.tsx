@@ -7,6 +7,7 @@ const Login = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/L
 const News = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/News'));
 const SignUp = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SignUp'));
 const SearchPassword = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchPassword'));
+const SearchId = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchId'));
 
 export interface BodyProps {
 pageName:string
@@ -29,6 +30,8 @@ class Body extends Component<BodyProps>{
       content = (<SignUp />)
     } else if (pageName === "SearchPassword") {
       content = (<SearchPassword />)
+    } else if (pageName === "SearchId") {
+      content = (<SearchId />)
     }
     return (
       <div>

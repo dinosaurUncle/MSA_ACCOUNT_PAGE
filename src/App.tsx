@@ -22,6 +22,10 @@ class App extends Component<AppProps> {
           element = <Switch>
             <Route path="/searchpassword" render={() => <Window pageName="SearchPassword" pageTitle="SearchPassword" />} />
         </Switch>;
+        } else if (pathName === "/searchid") {
+          element = <Switch>
+          <Route path="/searchid" render={() => <Window pageName="SearchId" pageTitle="SearchId" />} />
+        </Switch>;
         } else if (pathName === "/signup") {
           element = <Switch>
           <Route path="/signup" render={() => <Window pageName="SignUp" pageTitle="SignUp" />} />

@@ -27,6 +27,7 @@ class Window extends Component<WindowProps>{
      if (pageName === "Login") isLoginPage = true;
      else if (pageName === "SignUp") isLoginPage = true;
      else if (pageName === "SearchPassword") isLoginPage = true;
+     else if (pageName === "SearchId") isLoginPage = true;
 
     return (
       <div> 

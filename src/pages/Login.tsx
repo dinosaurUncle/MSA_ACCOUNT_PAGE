@@ -139,13 +139,20 @@ class Login extends Component<LoginProps>{
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/searchpassword" variant="body2">
-                Forgot password?
+              <Link href="/searchid" variant="body2">
+                Forgot Id?
               </Link>
             </Grid>
             <Grid item>
               <Link href="signup" variant="body2">
                 {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs>
+              <Link href="/searchpassword" variant="body2">
+                Forgot Password?
               </Link>
             </Grid>
           </Grid>
