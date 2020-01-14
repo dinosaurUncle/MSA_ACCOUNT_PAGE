@@ -9,6 +9,7 @@ import bodyParser from 'body-parser'
 import request from 'sync-request';
 import HTTPMethod from 'http-method-enum';
 import session from 'express-session';
+import urlencode from 'urlencode';
 
 
 function ServerApiCall(req: any, domain: string, method:HTTPMethod){
@@ -20,6 +21,7 @@ function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
     bodyData = {json: req.body}
   }
+  console.log('url: ', url);
   let post_request = request(method, url, bodyData)
   result = JSON.parse(post_request.getBody('utf8'));
   console.log('ServerApiCall result: ', result);
@@ -123,7 +125,6 @@ app.post('/createAcount', (req, res) => {
 
 // 3. 로그인 
 app.post('/login', (req, res) => {
-  console.log('test2222');
   let result = ServerApiCall(req, '/account/login', HTTPMethod.POST);
   console.log('server.login: ', result.login); 
   const sess = req.session as MySession;
@@ -136,4 +137,12 @@ app.post('/logout', (req, res) => {
   const sess = req.session as MySession;
   sess.login = false;
   res.json(null);
+});
+
+
+// 5. 아이디 찾기
+app.post('/searchId', (req, res) => {
+  console.log('searchId');
+  res.json(ServerApiCall(req, '/account/searchId/' + urlencode(req.body.name) + "/" + req.body.email
+  , HTTPMethod.GET));
 });
