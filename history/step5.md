@@ -19,6 +19,7 @@ yarn add @types/request
 yarn add sync-request
 yarn add express-session
 yarn add @types/express-session
+yarn add urlencode
 
 
 2) 폰트 추가(html의 head 부분에 추가함)
