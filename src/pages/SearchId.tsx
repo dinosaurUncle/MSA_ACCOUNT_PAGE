@@ -101,15 +101,17 @@ class SearchId extends Component<SearchIdProps>{
         },
         body: JSON.stringify(convertJson)};
         console.log(jsonData);
-        fetch('/searchId', jsonData)
+        fetch('/selectId', jsonData)
         .then(res => {
           res.json().then(
             data => {
               let result = JSON.stringify(data);
               let id = JSON.parse(result).id;
               this.setState({
-                id: id
-              })
+                id: id,
+                open: true
+              });
+
             }
           )
         })

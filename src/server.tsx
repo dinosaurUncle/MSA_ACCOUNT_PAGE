@@ -141,8 +141,8 @@ app.post('/logout', (req, res) => {
 
 
 // 5. 아이디 찾기
-app.post('/searchId', (req, res) => {
-  console.log('searchId');
-  res.json(ServerApiCall(req, '/account/searchId/' + urlencode(req.body.name) + "/" + req.body.email
+app.post('/selectId', (req, res) => {
+  console.log('selectId');
+  res.json(ServerApiCall(req, '/account/selectId/' + urlencode(req.body.name) + "/" + req.body.email
   , HTTPMethod.GET));
 });
