@@ -1,26 +1,32 @@
 import React, { Component} from 'react';
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
+import Paper from '@material-ui/core/Paper';
+import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
+import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
+import Menu, { MenuProps } from '@material-ui/core/Menu';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import SendIcon from '@material-ui/icons/Send';
+import HomeIcon from '@material-ui/icons/Home';
+import DraftsIcon from '@material-ui/icons/Drafts';
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import MenuIcon from '@material-ui/icons/Menu';
 
-
+const navigation = {
+  brand: { name: "NavbarScroller", to: "/" },
+  links: [
+    { name: "Home", to: "/" },
+    { name: "News", to: "/news" },
+  ]
+}
 const StyledMenuItem = (theme: Theme) =>
     createStyles({
       root: {
-        '&:focus': {
-          backgroundColor: theme.palette.primary.main,
-          '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-            color: theme.palette.common.white,
-          },
-        },
+        width: 230,
       },
     });
 
@@ -51,10 +57,6 @@ class IconMenu extends Component<IconMenuProps> {
     })
   }
 
-  clickToLink = (url:string) => {
-    let inputUrl = "/" + url;
-    return (<a href={inputUrl}></a>)
-  };
 
   state:State = {
     isCheck : false,
@@ -62,7 +64,9 @@ class IconMenu extends Component<IconMenuProps> {
   }
   
   render() {
-    const {classes, menuProps, title} = this.props;
+    const {classes} = this.props;
+    const {brand, links} = navigation;
+    
     let {isCheck} = this.state;
     
     
@@ -82,53 +86,15 @@ class IconMenu extends Component<IconMenuProps> {
   const handleClose = () => {
     this.setAnchorEl(null);
   };
+
+  const NavLinks: any = () => links.map((link: { name: string, to: string}) =>
+    <MenuItem component="a" href={link.to}><Typography variant="inherit">{link.name}</Typography></MenuItem>);
     return (
-      <div className={classes.root}>
-        <Button
-          aria-controls="customized-menu"
-          aria-haspopup="true"
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-        >
-          <MenuIcon />
-        </Button>
-        <Menu
-          elevation={1}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          {...menuProps}
-          id="customized-menu"
-          anchorEl={this.state.anchorEl}
-          keepMounted
-          open={Boolean(isCheck)}
-          onClose={handleClose}
-        >
-          <MenuItem className={classes.root} selected={title === "Home" ? true : false}>            
-            <ListItem component="a" href="/">
-              <ListItemIcon >
-                <SendIcon fontSize="small"  />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-          </MenuItem>
-          <MenuItem className={classes.root} selected={title === "News" ? true : false}>
-            <ListItem component="a" href="/news">
-              <ListItemIcon>
-                <InboxIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="News" />  
-            </ListItem>
-          </MenuItem>
-        </Menu>
-      </div>
+      <Paper className={classes.root}>
+      <MenuList>
+        <NavLinks />
+      </MenuList>
+    </Paper>
     );
   }
 }
