@@ -14,7 +14,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Badge } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-const IconMenu = loadable(() => import(/* webpackChunkName: "Window" */ './IconMenu'));
+
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -176,7 +176,6 @@ class Appbar extends Component<AppbarProps> {
       content = <div className={classes.root}>
       <AppBar position="static">
         <Toolbar  >
-        <IconMenu title={title} />
           <Typography variant="h6" className={classes.title}>
             {titleDiv(title)}
           </Typography>
@@ -217,8 +216,8 @@ class Appbar extends Component<AppbarProps> {
             <Button color="inherit" onClick={logout} >Log Out</Button>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      
+      
     </div>;
     } else {
       content = <div className={classes.root}>
