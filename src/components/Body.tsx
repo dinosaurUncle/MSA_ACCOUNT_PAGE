@@ -24,32 +24,46 @@ const StyledMenuItem = (theme: Theme) =>
       },
     });
 export interface BodyGridProps extends WithStyles<typeof StyledMenuItem> {
-  pageName:string  
+  pageName:string
+  isLoginPage:boolean
 }
 
 
 class Body extends Component<BodyGridProps>{
 
 
-  render() {
-    const {classes, pageName} = this.props;
-    console.log('pageName: ', pageName);
+  pageSelector(pageName: string){
     let content: any = null;
-    if (pageName === "Home") {
-      content = (<Home />)
-    } else if (pageName === "Login") {
-      content = (<Login />)
-    } else if (pageName === "News") {
-      content = (<News />)
-    } else if (pageName === "SignUp") {
-      content = (<SignUp />)
-    } else if (pageName === "SearchPassword") {
-      content = (<SearchPassword />)
-    } else if (pageName === "SearchId") {
-      content = (<SearchId />)
+    switch (pageName) {
+      case "Home":
+        content = (<Home />)
+        break;
+      case "Login":
+        content = (<Login />)
+        break;
+      case "News":
+        content = (<News />)
+        break; 
+      case "SignUp":
+        content = (<SignUp />)
+        break;  
+      case "SearchPassword":
+        content = (<SearchPassword />)
+        break;
+      case "SearchId":
+        content = (<SearchId />)
+        break;  
     }
-    return (
-      <div className={classes.root}>
+    return content;
+  }
+
+  render() {
+    const {classes, pageName, isLoginPage} = this.props;
+
+    let content: any = this.pageSelector(pageName);
+    const bodyContent = (isLoginPage)?
+     <div>{content}</div> :
+     <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs>
           <IconMenu title={"asdf"} />
@@ -59,6 +73,8 @@ class Body extends Component<BodyGridProps>{
           </Grid>
         </Grid>
       </div>
+    return (
+      bodyContent
     );
   }
 }
