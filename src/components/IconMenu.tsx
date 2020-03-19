@@ -88,7 +88,7 @@ class IconMenu extends Component<IconMenuProps> {
   };
 
   const NavLinks: any = () => links.map((link: { name: string, to: string}) =>
-    <MenuItem component="a" href={link.to}><Typography variant="inherit">{link.name}</Typography></MenuItem>);
+    <MenuItem key={link.name} component="a" href={link.to}><Typography variant="inherit">{link.name}</Typography></MenuItem>);
     return (
       <Paper className={classes.root}>
       <MenuList>
