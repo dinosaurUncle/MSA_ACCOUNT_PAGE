@@ -26,6 +26,7 @@ const StyledMenuItem = (theme: Theme) =>
 export interface BodyGridProps extends WithStyles<typeof StyledMenuItem> {
   pageName:string
   isLoginPage:boolean
+  session?: any
 }
 
 
@@ -58,7 +59,7 @@ class Body extends Component<BodyGridProps>{
   }
 
   render() {
-    const {classes, pageName, isLoginPage} = this.props;
+    const {classes, pageName, isLoginPage, session} = this.props;
 
     let content: any = this.pageSelector(pageName);
     const bodyContent = (isLoginPage)?
@@ -66,7 +67,7 @@ class Body extends Component<BodyGridProps>{
      <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs>
-          <IconMenu title={"asdf"} />
+          <IconMenu title={"asdf"} session={session} />
           </Grid>
           <Grid item xs={8}>
             {content}    

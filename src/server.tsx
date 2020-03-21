@@ -12,6 +12,7 @@ import session from 'express-session';
 import urlencode from 'urlencode';
 
 
+
 function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   let result =null;
   const PORT = '8089';
@@ -26,6 +27,15 @@ function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   result = JSON.parse(post_request.getBody('utf8'));
   console.log('ServerApiCall result: ', result);
   return result;
+}
+
+function getSessionSetting(req: any){
+  const sess = req.session as MySession;
+  if (sess.pages == null){
+    console.log('getMenuList api call!');
+    let result = ServerApiCall(null, '/account/page/' + sess.account.accountId, HTTPMethod.GET);
+    sess.pages = result.pages;
+  }
 }
 
 interface MySession extends Express.Session {
@@ -66,6 +76,9 @@ app.get('*', (req, res) => {
   const sess = req.session as MySession;
   console.log('log: ' + req.url);
   console.log("login: ", sess.login);
+  if (sess.login) {
+    getSessionSetting(req);
+  }
   
   const nodeStats = path.resolve(__dirname, './node/loadable-stats.json');
   const webStats = path.resolve(__dirname, './web/loadable-stats.json');
@@ -82,7 +95,6 @@ app.get('*', (req, res) => {
 
   const html = renderToString(jsx);
   const helmet = Helmet.renderStatic();
-
   res.set('content-type', 'text/html');
   res.send(`
     <!DOCTYPE html>
@@ -96,7 +108,7 @@ app.get('*', (req, res) => {
         </head>
         <body>
           <div id="root">${html}</div>
-          <div style="visibility:hidden" id="session">${sess.login}</div>
+          <div style="visibility:hidden" id="session">${JSON.stringify(sess)}</div>
           ${webExtractor.getScriptTags()}
         </body>
       </html>
@@ -127,8 +139,10 @@ app.post('/createAcount', (req, res) => {
 app.post('/login', (req, res) => {
   let result = ServerApiCall(req, '/account/login', HTTPMethod.POST);
   console.log('server.login: ', result.login); 
+  console.log('server.result: ', result); 
   const sess = req.session as MySession;
   sess.login = result.login;
+  sess.account = result.account;
   res.json(result);
 });
 
@@ -136,6 +150,8 @@ app.post('/login', (req, res) => {
 app.post('/logout', (req, res) => {
   const sess = req.session as MySession;
   sess.login = false;
+  sess.account = null;
+  sess.pages = null;
   res.json(null);
 });
 

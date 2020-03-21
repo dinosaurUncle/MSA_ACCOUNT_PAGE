@@ -48,7 +48,7 @@ export interface SearchIdProps extends WithStyles<typeof SearchIdstyles> {
   LoginStyle?:typeof SearchIdstyles
 }
 export interface Account {
-  name : string
+  accountName : string
   email : string
 }
 
@@ -90,7 +90,7 @@ class SearchId extends Component<SearchIdProps>{
       console.log(map);
 
       let convertJson : Account = {
-        name : map.get('name'),
+        accountName : map.get('name'),
         email : map.get('email'),
       };
       let jsonData = {

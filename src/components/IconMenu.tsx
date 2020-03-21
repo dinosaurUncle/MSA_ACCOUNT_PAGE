@@ -31,8 +31,9 @@ const StyledMenuItem = (theme: Theme) =>
     });
 
 export interface IconMenuProps extends WithStyles<typeof StyledMenuItem> {
-  menuProps?:MenuProps,
+  menuProps?:MenuProps
   title?: string
+  session?: any
 }
 
 
@@ -64,7 +65,8 @@ class IconMenu extends Component<IconMenuProps> {
   }
   
   render() {
-    const {classes} = this.props;
+    const {classes, session} = this.props;
+    console.log('IconMenu.session: ', session);
     const {brand, links} = navigation;
     
     let {isCheck} = this.state;
@@ -87,8 +89,8 @@ class IconMenu extends Component<IconMenuProps> {
     this.setAnchorEl(null);
   };
 
-  const NavLinks: any = () => links.map((link: { name: string, to: string}) =>
-    <MenuItem key={link.name} component="a" href={link.to}><Typography variant="inherit">{link.name}</Typography></MenuItem>);
+  const NavLinks: any = () => session.pages.map((page: { pageId: string, pageName: string, pageUrl: string}) =>
+    <MenuItem key={page.pageId} component="a" href={page.pageUrl}><Typography variant="inherit">{page.pageName}</Typography></MenuItem>);
     return (
       <Paper className={classes.root}>
       <MenuList>

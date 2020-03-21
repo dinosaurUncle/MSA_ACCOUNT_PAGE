@@ -37,7 +37,7 @@ const Loginstyles = (theme: Theme) =>
     const map = new Map< string | undefined, any>();
     
     export interface LoginType {
-      id: string
+      accountId: string
       password : string
     }    
 
@@ -59,7 +59,7 @@ class Login extends Component<LoginProps>{
       e.preventDefault();
 
       let convertJson : LoginType = {
-        id : map.get('id'),
+        accountId : map.get('id'),
         password : map.get('password')
       };
       let jsonData = {

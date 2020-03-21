@@ -70,8 +70,8 @@ export interface State {
 }
 
 export interface Account {
-  id: string
-  name : string
+  accountId: string
+  accountName : string
   password : string
   gender : string
   email : string
@@ -121,8 +121,8 @@ class SignUp extends Component<SignUpProps>{
       console.log(map);
 
       let convertJson : Account = {
-        id : map.get('id'),
-        name : map.get('name'),
+        accountId : map.get('id'),
+        accountName : map.get('name'),
         password : map.get('password'),
         gender : map.get('gender'),
         email : map.get('email'),
@@ -167,19 +167,19 @@ class SignUp extends Component<SignUpProps>{
     () => {
 
       let convertJson : Account = {
-        id : map.get('id'),
-        name : map.get('name'),
+        accountId : map.get('id'),
+        accountName : map.get('name'),
         password : map.get('password'),
         gender : map.get('gender'),
         email : map.get('email'),
         phone : map.get('phone')
       };
-      console.log('convertJson.id: ' + convertJson.id);
-      console.log('convertJson.id.trim(): ' + convertJson.id.trim());
-      if (convertJson.id == null || convertJson.id == undefined){
+      console.log('convertJson.id: ' + convertJson.accountId);
+      console.log('convertJson.id.trim(): ' + convertJson.accountId.trim());
+      if (convertJson.accountId == null || convertJson.accountId == undefined){
         alert('id가 입력되지 않았습니다')
         return;
-      } else if (convertJson.id.trim() === '') {
+      } else if (convertJson.accountId.trim() === '') {
         alert('id가 비어있습니다')
         return;
       }

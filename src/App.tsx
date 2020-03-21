@@ -5,19 +5,18 @@ const Window = loadable(() => import(/* webpackChunkName: "Window" */ './compone
 
 
 export interface AppProps {
-  isLogin?: boolean
   location?: any
+  session?: any
 }
 
 class App extends Component<AppProps> {
 
   render() {
-    const {isLogin, location} = this.props;
-    
+    const {location, session} = this.props;
     let element : any = null;
     if (location != null){
       let pathName =  window.document.location.pathname;
-      if (!isLogin && pathName !== "/login" ) {
+      if (!session.login && pathName !== "/login" ) {
         if (pathName === "/searchpassword" ){
           element = <Switch>
             <Route path="/searchpassword" render={() => <Window pageName="SearchPassword" pageTitle="SearchPassword" />} />
@@ -33,16 +32,16 @@ class App extends Component<AppProps> {
         } else {
           window.location.replace("/login"); 
         }
-      } else if (pathName === "/login" && isLogin) {
+      } else if (pathName === "/login" && session.login) {
         window.location.replace("/"); 
-      } else if (!isLogin && pathName === "/login" ) {
+      } else if (!session.login && pathName === "/login" ) {
         element = <Switch>
         <Route path="/login" render={() => <Window pageName="Login" pageTitle="Login" />} />
         </Switch>;
       } else {
         element = <Switch>
-        <Route exact path="/" render={() => <Window pageName="Home" pageTitle="Home" />} />
-        <Route path="/news" render={() => <Window pageName="News" pageTitle="News" />} />
+        <Route exact path="/" render={() => <Window pageName="Home" pageTitle="Home" session={session} />} />
+        <Route path="/news" render={() => <Window pageName="News" pageTitle="News" session={session} />} />
       </Switch>;
       } 
     }

@@ -49,7 +49,8 @@ export interface State {
 export interface AppbarProps extends WithStyles<typeof styles> {
   isLogin?: boolean,
   isLoginPage?: boolean,
-  title?: string
+  title?: string,
+  session?: any
 }
 
 function titleDiv(title?: string){
@@ -170,7 +171,7 @@ class Appbar extends Component<AppbarProps> {
       </Menu>
     );
     
-    const {classes, title, isLogin, isLoginPage} = this.props;
+    const {classes, title, isLogin, isLoginPage, session} = this.props;
     let content: any = null;
     if (!isLoginPage) {
       content = <div className={classes.root}>

@@ -5,25 +5,18 @@ import { loadableReady } from '@loadable/component';
 
 import App from './App';
 
-
-let isLogin:string = 'false';
-let result:boolean = false;
+let session:any = null;
 loadableReady(() => {
   const rootElement = document.getElementById('root');
   const sessionElement : HTMLElement | null = document.getElementById('session');
   if ( sessionElement) {
     const definitelySessionElement : HTMLElement = sessionElement;
-    isLogin = definitelySessionElement.innerHTML;
-  }
-  if (isLogin === 'true') {
-    result = true;
-  } else {
-    result = false;
+    session = JSON.parse(definitelySessionElement.innerHTML);
   }
   const location = document.location;
   ReactDOM.render(
     <BrowserRouter>
-      <App isLogin={result} location={location} />
+      <App location={location} session={session} />
     </BrowserRouter>,
     rootElement
   );
