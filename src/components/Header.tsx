@@ -96,6 +96,7 @@ const styles = (theme: Theme) =>
         },
         paper: {
           paddingBottom: 50,
+          width: 300
         },
         list: {
           marginBottom: theme.spacing(1),
@@ -104,8 +105,7 @@ const styles = (theme: Theme) =>
           backgroundColor: theme.palette.background.paper,
         },
         closeIcon: {
-          textAlign: "right",
-          paddingLeft: 390
+          
         }
     });
 export interface State {
@@ -113,6 +113,13 @@ export interface State {
   anchorEl2:any
   mobileMoreAnchorEl:any
 }   
+
+export interface EventMessage {
+  accountId: string
+  message: string
+  date: string
+  check: boolean
+}
 
 export interface AppbarProps extends WithStyles<typeof styles> {
   isLogin?: boolean,
@@ -137,6 +144,7 @@ class Appbar extends Component<AppbarProps> {
 
   render() {
     const {classes, title, isLogin, isLoginPage, session} = this.props;
+    const eventMessages:Array<EventMessage> = session.eventMessage.eventMessages;
     const logout = () => {
       let jsonData = {
         method: 'POST',
@@ -240,11 +248,12 @@ class Appbar extends Component<AppbarProps> {
           
           
           <List className={classes.list}>
-            {messages.map(({ id, primary, secondary, date}) => (
-              <React.Fragment key={id}>
+            {eventMessages.map(({ message, date, check}) => (
+              <React.Fragment key={counter = counter+1}>
                 {date != null  && <ListSubheader className={classes.subheader}>{date}</ListSubheader>}
                 <ListItem button>
-                  <ListItemText primary={primary} secondary={secondary} />
+                <CloseIcon className={classes.closeIcon} />
+                  <ListItemText primary="계정정보수정" secondary={message} />
                 </ListItem>
               </React.Fragment>
             ))}
@@ -270,7 +279,7 @@ class Appbar extends Component<AppbarProps> {
           aria-controls={menu2Id}
           aria-haspopup="true"
           >
-            <Badge badgeContent={11} color="secondary">
+            <Badge badgeContent={session.eventMessage.count} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -308,7 +317,7 @@ class Appbar extends Component<AppbarProps> {
               aria-controls={menu2Id}
               aria-haspopup="true"
               >
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={session.eventMessage.count} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

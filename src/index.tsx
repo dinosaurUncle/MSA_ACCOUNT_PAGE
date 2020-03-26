@@ -12,6 +12,7 @@ loadableReady(() => {
   if ( sessionElement) {
     const definitelySessionElement : HTMLElement = sessionElement;
     session = JSON.parse(definitelySessionElement.innerHTML);
+    console.log('session: ', session);
   }
   const location = document.location;
   ReactDOM.render(

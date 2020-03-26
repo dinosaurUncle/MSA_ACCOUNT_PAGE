@@ -31,11 +31,14 @@ function ServerApiCall(req: any, domain: string, method:HTTPMethod){
 
 function getSessionSetting(req: any){
   const sess = req.session as MySession;
+  let result = null;
   if (sess.pages == null){
     console.log('getMenuList api call!');
-    let result = ServerApiCall(null, '/account/page/' + sess.account.accountId, HTTPMethod.GET);
+    result = ServerApiCall(null, '/account/page/' + sess.account.accountId, HTTPMethod.GET);
     sess.pages = result.pages;
-  }
+    result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
+    sess.eventMessage = result;
+  } 
 }
 
 interface MySession extends Express.Session {
