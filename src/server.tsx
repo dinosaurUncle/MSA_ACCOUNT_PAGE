@@ -34,7 +34,7 @@ function getSessionSetting(req: any){
   let result = null;
   if (sess.pages == null){
     console.log('getMenuList api call!');
-    result = ServerApiCall(null, '/account/page/' + sess.account.accountId, HTTPMethod.GET);
+    result = ServerApiCall(null, '/account_page/page/' + sess.account.accountId, HTTPMethod.GET);
     sess.pages = result.pages;
     result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
     sess.eventMessage = result;
@@ -164,4 +164,16 @@ app.post('/selectId', (req, res) => {
   console.log('selectId');
   res.json(ServerApiCall(req, '/account/selectId/' + urlencode(req.body.name) + "/" + req.body.email
   , HTTPMethod.GET));
+});
+
+// 6. 이벤트 메세지 확인
+app.put('/eventMessageCheck', (req, res) => {
+  console.log('eventMessageCheck');
+  ServerApiCall(req, '/eventMessage', HTTPMethod.PUT)
+  
+  const sess = req.session as MySession;
+  sess.eventMessage = null;
+  let result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
+  sess.eventMessage = result;
+  res.json();
 });

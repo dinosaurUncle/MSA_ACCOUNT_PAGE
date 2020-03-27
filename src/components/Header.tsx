@@ -115,10 +115,13 @@ export interface State {
 }   
 
 export interface EventMessage {
-  accountId: string
-  message: string
-  date: string
-  check: boolean
+  eventMessageId: string
+  accountId?: string
+  eventMessageType?: string
+  eventMessageTitle?: string
+  eventMessageDescription?: string
+  date?: string
+  check?: boolean
 }
 
 export interface AppbarProps extends WithStyles<typeof styles> {
@@ -144,7 +147,12 @@ class Appbar extends Component<AppbarProps> {
 
   render() {
     const {classes, title, isLogin, isLoginPage, session} = this.props;
-    const eventMessages:Array<EventMessage> = session.eventMessage.eventMessages;
+    let defaultEventMessage:EventMessage = {eventMessageId: "1"}
+    let eventMessages:Array<EventMessage> = [defaultEventMessage];
+    if (session){
+      eventMessages= session.eventMessage.eventMessages;
+    }
+    
     const logout = () => {
       let jsonData = {
         method: 'POST',
@@ -210,6 +218,32 @@ class Appbar extends Component<AppbarProps> {
         mobileMoreAnchorEl: target
       })
     }
+    const eventMessageCheck = (eventMessageId: string) =>{
+      let convertJson : EventMessage = {
+        eventMessageId : eventMessageId
+      };
+      let jsonData = {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(convertJson)};
+        console.log(jsonData);
+        fetch('/eventMessageCheck', jsonData)
+        .then(res => {
+          res.json().then(
+            data => {
+              let result = JSON.stringify(data);
+              console.log(JSON.parse(result));
+              window.location.replace("/");
+            }
+          )
+        })
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+    }
+
     const isMobileMenuOpen = Boolean(this.state.mobileMoreAnchorEl);
     const renderMenu = (
       <Menu
@@ -248,12 +282,11 @@ class Appbar extends Component<AppbarProps> {
           
           
           <List className={classes.list}>
-            {eventMessages.map(({ message, date, check}) => (
-              <React.Fragment key={counter = counter+1}>
+            {eventMessages.map(({eventMessageId,  eventMessageType, eventMessageTitle, eventMessageDescription, date, check}) => (
+              <React.Fragment key={eventMessageId}>
                 {date != null  && <ListSubheader className={classes.subheader}>{date}</ListSubheader>}
-                <ListItem button>
-                <CloseIcon className={classes.closeIcon} />
-                  <ListItemText primary="계정정보수정" secondary={message} />
+                <ListItem button >
+                  <ListItemText  onClick={() => eventMessageCheck(eventMessageId)}  primary={eventMessageTitle} secondary={eventMessageDescription} />
                 </ListItem>
               </React.Fragment>
             ))}
@@ -279,7 +312,7 @@ class Appbar extends Component<AppbarProps> {
           aria-controls={menu2Id}
           aria-haspopup="true"
           >
-            <Badge badgeContent={session.eventMessage.count} color="secondary">
+            <Badge badgeContent={session?session.eventMessage.count : 0} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
