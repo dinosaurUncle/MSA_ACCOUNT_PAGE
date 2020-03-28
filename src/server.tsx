@@ -168,12 +168,9 @@ app.post('/selectId', (req, res) => {
 
 // 6. 이벤트 메세지 확인
 app.put('/eventMessageCheck', (req, res) => {
-  console.log('eventMessageCheck');
-  ServerApiCall(req, '/eventMessage', HTTPMethod.PUT)
-  
   const sess = req.session as MySession;
-  sess.eventMessage = null;
-  let result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
+  console.log('eventMessageCheck');
+  let result = ServerApiCall(req, '/eventMessage', HTTPMethod.PUT)
   sess.eventMessage = result;
-  res.json();
+  res.json(result);
 });
