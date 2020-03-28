@@ -3,14 +3,26 @@ import React, { Component } from 'react';
 import loadable from '@loadable/component';
 const Window = loadable(() => import(/* webpackChunkName: "Window" */ './components/Window'));
 
+export interface page {
+  pageId : number
+  pageName : string
+  pageUrl : string
+  description : string
+}
 
 export interface AppProps {
   location?: any
   session?: any
 }
 
-class App extends Component<AppProps> {
+export interface AppState {
+  pages : Array<page>
+}
 
+class App extends Component<AppProps> {
+  state : AppState ={
+    pages:this.props.session.pages
+  }
   render() {
     const {location, session} = this.props;
     let element : any = null;
@@ -40,12 +52,14 @@ class App extends Component<AppProps> {
         </Switch>;
       } else {
         element = <Switch>
-        <Route exact path="/" render={() => <Window pageName="Home" pageTitle="Home" session={session} />} />
-        <Route path="/news" render={() => <Window pageName="News" pageTitle="News" session={session} />} />
+          {this.state.pages.map(({pageId, pageName, pageUrl, description}) =>(
+            <Route key={pageId} exact path={pageUrl} render={() => <Window pageName={pageName} pageTitle={pageName} session={session} />} />
+          ))}
       </Switch>;
       } 
     }
-    
+    console.log("########");
+    console.log(element);
       
     return (
       <div>

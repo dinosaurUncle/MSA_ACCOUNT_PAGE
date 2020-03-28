@@ -8,6 +8,7 @@ const IconMenu = loadable(() => import(/* webpackChunkName: "Window" */ './IconM
 const Home = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Home'));
 const Login = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Login'));
 const News = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/News'));
+const Admin = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/Admin'));
 const SignUp = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SignUp'));
 const SearchPassword = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchPassword'));
 const SearchId = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchId'));
@@ -53,7 +54,10 @@ class Body extends Component<BodyGridProps>{
         break;
       case "SearchId":
         content = (<SearchId />)
-        break;  
+        break;
+      case "Admin":    
+        content = (<Admin />)
+        break;
     }
     return content;
   }
