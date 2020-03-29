@@ -12,7 +12,7 @@ export interface page {
 
 export interface AppProps {
   location?: any
-  session?: any
+  session: any
 }
 
 export interface AppState {
@@ -21,7 +21,7 @@ export interface AppState {
 
 class App extends Component<AppProps> {
   state : AppState ={
-    pages:this.props.session.pages
+    pages:this.props.session?this.props.session.pages:[]
   }
   render() {
     const {location, session} = this.props;
@@ -52,6 +52,7 @@ class App extends Component<AppProps> {
         </Switch>;
       } else {
         element = <Switch>
+          
           {this.state.pages.map(({pageId, pageName, pageUrl, description}) =>(
             <Route key={pageId} exact path={pageUrl} render={() => <Window pageName={pageName} pageTitle={pageName} session={session} />} />
           ))}

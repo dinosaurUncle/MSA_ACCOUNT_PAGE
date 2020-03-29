@@ -7,12 +7,19 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import loadable from '@loadable/component';
+import Grid from '@material-ui/core/Grid';
+const AccountManage = loadable(() => import('../subpages/AccountManage'));
+const PageManage = loadable(() => import('../subpages/PageManage'));
+const RoleManage = loadable(() => import('../subpages/RoleManage'));
 
 
 const styles = (theme: Theme) =>
     createStyles({
       root: {
         marginTop: 15,
+        marginLeft: 100,
+        marginRight: 100,
         flexGrow: 1
       },
       tabs: {
@@ -69,20 +76,22 @@ class Admin extends Component<AdminProps>{
     
     return (
       <div className={classes.root}>
-        
-        <Tabs  value={this.state.value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab className={classes.tabs} label="계정 관리" {...a11yProps(0)} />
-          <Tab className={classes.tabs} label="페이지 관리" {...a11yProps(1)} />
-          <Tab className={classes.tabs} label="권한 관리" {...a11yProps(2)} />
-        </Tabs>
+        <Grid container justify="center" alignItems="center" >
+          <Tabs style={{marginRight:100}} value={this.state.value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab className={classes.tabs} label="계정 관리" {...a11yProps(0)} />
+            <Tab className={classes.tabs} label="페이지 관리" {...a11yProps(1)} />
+            <Tab className={classes.tabs} label="권한 관리" {...a11yProps(2)} />
+          </Tabs>
+        </Grid>
+          
         <TabPanel value={this.state.value} index={0}>
-          Item One
+          <AccountManage/>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          Item Two
+          <PageManage/>
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          Item Three
+          <RoleManage/>
         </TabPanel>
       </div>
     );

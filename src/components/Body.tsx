@@ -67,15 +67,12 @@ class Body extends Component<BodyGridProps>{
 
     let content: any = this.pageSelector(pageName);
     const bodyContent = (isLoginPage)?
-     <div>{content}</div> :
+     <div >{content}</div> :
      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs>
+        <Grid container>
+          
           <IconMenu title={"asdf"} session={session} />
-          </Grid>
-          <Grid item xs={8}>
-            {content}    
-          </Grid>
+          {content}    
         </Grid>
       </div>
     return (
