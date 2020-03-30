@@ -103,6 +103,7 @@ app.get('*', (req, res) => {
     <!DOCTYPE html>
       <html lang="en">
         <head>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
           <meta name="viewport" content="width=device-width, user-scalable=no">
           <meta name="google" content="notranslate">
           ${helmet.title.toString()}
@@ -174,3 +175,11 @@ app.put('/eventMessageCheck', (req, res) => {
   sess.eventMessage = result;
   res.json(result);
 });
+//7. 전체 회원 리스트 조회
+app.post('/getAccountList', (req, res) => {
+  console.log('getAccountList');
+  let result = ServerApiCall(req, '/account', HTTPMethod.GET)
+  console.log('getAccountList.result: ', result);
+  res.json(result);
+});
+

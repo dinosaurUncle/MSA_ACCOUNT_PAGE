@@ -60,14 +60,16 @@ function a11yProps(index:any) {
 export interface AdminStates {
   value: any
 }
-export interface AdminProps extends WithStyles<typeof styles> {}
+export interface AdminProps extends WithStyles<typeof styles> {
+  session?: any
+}
 
 class Admin extends Component<AdminProps>{
   state:AdminStates = {
     value: 0
   }
   render() {
-    const {classes} = this.props;
+    const {classes, session} = this.props;
     const handleChange = (event:any, newValue:any) =>{
       this.setState({
         value : newValue

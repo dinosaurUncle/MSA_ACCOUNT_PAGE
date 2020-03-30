@@ -34,7 +34,7 @@ export interface BodyGridProps extends WithStyles<typeof StyledMenuItem> {
 class Body extends Component<BodyGridProps>{
 
 
-  pageSelector(pageName: string){
+  pageSelector(pageName: string, session: any){
     let content: any = null;
     switch (pageName) {
       case "Home":
@@ -56,7 +56,7 @@ class Body extends Component<BodyGridProps>{
         content = (<SearchId />)
         break;
       case "Admin":    
-        content = (<Admin />)
+        content = (<Admin session={session} />)
         break;
     }
     return content;
@@ -65,7 +65,7 @@ class Body extends Component<BodyGridProps>{
   render() {
     const {classes, pageName, isLoginPage, session} = this.props;
 
-    let content: any = this.pageSelector(pageName);
+    let content: any = this.pageSelector(pageName, session);
     const bodyContent = (isLoginPage)?
      <div >{content}</div> :
      <div className={classes.root}>
