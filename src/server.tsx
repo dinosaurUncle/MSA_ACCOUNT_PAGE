@@ -19,10 +19,11 @@ function ServerApiCall(req: any, domain: string, method:HTTPMethod){
   const HOST = 'http://localhost';
   let url = HOST + ":" + PORT + domain;
   let bodyData = {};
-  if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
+  if (method == HTTPMethod.POST || method == HTTPMethod.PUT || method == HTTPMethod.DELETE) {
     bodyData = {json: req.body}
   }
   console.log('url: ', url);
+  console.log('method: ', method);
   let post_request = request(method, url, bodyData)
   result = JSON.parse(post_request.getBody('utf8'));
   console.log('ServerApiCall result: ', result);
@@ -39,6 +40,12 @@ function getSessionSetting(req: any){
     result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
     sess.eventMessage = result;
   } 
+}
+function refresheventMessage(req: any){
+  const sess = req.session as MySession;
+  let result = null;
+  result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
+    sess.eventMessage = result;
 }
 
 interface MySession extends Express.Session {
@@ -171,15 +178,29 @@ app.post('/selectId', (req, res) => {
 app.put('/eventMessageCheck', (req, res) => {
   const sess = req.session as MySession;
   console.log('eventMessageCheck');
-  let result = ServerApiCall(req, '/eventMessage', HTTPMethod.PUT)
+  let result = ServerApiCall(req, '/eventMessage', HTTPMethod.PUT);
   sess.eventMessage = result;
   res.json(result);
 });
-//7. 전체 회원 리스트 조회
+//7. 관리자 페이지 - 계정관리 - 전체 회원 리스트 조회
 app.post('/getAccountList', (req, res) => {
   console.log('getAccountList');
-  let result = ServerApiCall(req, '/account', HTTPMethod.GET)
+  let result = ServerApiCall(req, '/account', HTTPMethod.GET);
   console.log('getAccountList.result: ', result);
+  res.json(result);
+});
+//8. 관리자 페이지 - 계정관리 - 회원 수정
+app.put('/accountUpdate', (req, res) => { 
+  console.log("accountUpdate");
+  let result = ServerApiCall(req, '/account/admin/'+ req.body.targetAccountId, HTTPMethod.PUT);
+  refresheventMessage(req);
+  res.json(result);
+});
+//9. 관리자 페이지 - 계정관리 - 회원 삭제
+app.delete('/accountDelete', (req, res) => {
+  console.log("accountDelete: ", req.body);
+  let result = ServerApiCall(req, '/account/admin/'+ req.body.accountId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
+  refresheventMessage(req);
   res.json(result);
 });
 

@@ -1,41 +1,21 @@
 import React, { Component } from 'react';
 import MaterialTable, { Column } from 'material-table';
 
-const getAccountList = () =>{
-  console.log("getAccountList");
-  let jsonData = {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }};
-    fetch('/getAccountList', jsonData)
-    .then(res => {
-      res.json().then(
-        data => {
-          let result = JSON.stringify(data);
-          console.log(JSON.parse(result));
-          let responseAccountList = JSON.parse(result);
-          console.log(responseAccountList);
-          return responseAccountList
-        }
-      )
-    })
-    .then(json => console.log(json))
-    .catch(err => console.log(err));
-}
-
 interface Row {
   accountId? : string
   accountName? : string
+  password? : string
   gender? : string
   email? : string
   phone? : string
+  targetAccountId? : string
 }
 
 
 
-export interface AccountManageProps {}
+export interface AccountManageProps {
+  session?: any
+}
 export interface AccountManageStates {
   columns: Array<Column<Row>>
   dataList: Row[];
@@ -67,8 +47,9 @@ class AccountManage extends Component<AccountManageProps>{
   }
   state : AccountManageStates = {
     columns : [
-      { title: 'Id', field: 'accountId' },
+      { title: 'Id', field: 'accountId', editable: "never" },
       { title: 'Name', field: 'accountName' },
+      { title: 'Password', field: 'password', hidden: true},
       { title: 'Gender', field: 'gender', lookup: { 'MALE': 'male', 'FEMALE': 'female' }},
       { title: 'Email', field: 'email'},
       { title: 'Phone', field: 'phone'},
@@ -77,33 +58,48 @@ class AccountManage extends Component<AccountManageProps>{
   }
 
     render() {  
-      
+      const {session} = this.props;
       const tableContent = (
         <MaterialTable
           title="Account Management Page"
           columns={this.state.columns}
           data={this.state.dataList}
           editable={{
-            onRowAdd: (newData) =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
-                  this.setState((prevState:AccountManageStates) => {
-                    const data = [...prevState.dataList];
-                    data.push(newData);
-                    return { ...prevState, data };
-                  });
-                }, 600);
-              }),
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve) => {
                 setTimeout(() => {
                   resolve();
                   if (oldData) {
                     this.setState((prevState:AccountManageStates) => {
-                      const data = [...prevState.dataList];
+                      newData.targetAccountId = session.account.accountId;
+                      let jsonData = {
+                        method: 'PUT',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                            
+                        },
+                        body: JSON.stringify(newData)};
+                        fetch('/accountUpdate', jsonData)
+                        .then(res => {
+                          res.json().then(
+                            data => {
+                              let result = JSON.stringify(data);
+                              let updateAccountList = JSON.parse(result);
+                              this.setState({
+                                dataList : updateAccountList.accounts
+                              })
+                            }
+                          )
+                        })
+                        .then(json => console.log(json))
+                        .catch(err => console.log(err));
+                        
+                      const data = [...this.state.dataList]; 
                       data[data.indexOf(oldData)] = newData;
-                      return { ...prevState, data };
+                      this.setState({
+                        dataList : data
+                      })
                     });
                   }
                 }, 600);
@@ -113,9 +109,34 @@ class AccountManage extends Component<AccountManageProps>{
                 setTimeout(() => {
                   resolve();
                   this.setState((prevState:AccountManageStates) => {
-                    const data = [...prevState.dataList];
+                    oldData.targetAccountId = session.account.accountId;
+                    let jsonData = {
+                      method: 'DELETE',
+                      headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json'
+                          
+                      },
+                      body: JSON.stringify(oldData)};
+                      fetch('/accountDelete', jsonData)
+                      .then(res => {
+                        res.json().then(
+                          data => {
+                            let result = JSON.stringify(data);
+                            let deleteAfterAccountList = JSON.parse(result);
+                            this.setState({
+                              dataList : deleteAfterAccountList.accounts
+                            })
+                          }
+                        )
+                      })
+                      .then(json => console.log(json))
+                      .catch(err => console.log(err));
+                      const data = [...this.state.dataList]; 
                     data.splice(data.indexOf(oldData), 1);
-                    return { ...prevState, data };
+                    this.setState({
+                      dataList : data
+                    })
                   });
                 }, 600);
               }),
