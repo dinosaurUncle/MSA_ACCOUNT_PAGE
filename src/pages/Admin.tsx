@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 const AccountManage = loadable(() => import('../subpages/AccountManage'));
 const PageManage = loadable(() => import('../subpages/PageManage'));
 const RoleManage = loadable(() => import('../subpages/RoleManage'));
+const EventMessageManage = loadable(() => import('../subpages/EventMessageManage'));
 
 
 const styles = (theme: Theme) =>
@@ -83,6 +84,7 @@ class Admin extends Component<AdminProps>{
             <Tab className={classes.tabs} label="계정 관리" {...a11yProps(0)} />
             <Tab className={classes.tabs} label="페이지 관리" {...a11yProps(1)} />
             <Tab className={classes.tabs} label="권한 관리" {...a11yProps(2)} />
+            <Tab className={classes.tabs} label="이벤트메시지 관리" {...a11yProps(3)} />
           </Tabs>
         </Grid>
           
@@ -94,6 +96,9 @@ class Admin extends Component<AdminProps>{
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
           <RoleManage/>
+        </TabPanel>
+        <TabPanel value={this.state.value} index={3}>
+          <EventMessageManage/>
         </TabPanel>
       </div>
     );

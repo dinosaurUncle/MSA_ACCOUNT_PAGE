@@ -59,8 +59,6 @@ class App extends Component<AppProps> {
       </Switch>;
       } 
     }
-    console.log("########");
-    console.log(element);
       
     return (
       <div>

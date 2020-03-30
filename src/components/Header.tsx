@@ -100,10 +100,36 @@ function titleDiv(title?: string){
 }
 
 class Appbar extends Component<AppbarProps> {
+  componentDidMount () {
+    if (this.props.session){
+      let jsonData = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }};
+        fetch('/eventMessageList', jsonData)
+        .then(res => {
+          res.json().then(
+            data => {
+              let result = JSON.stringify(data);
+              console.log(JSON.parse(result));
+              let responseEventMessage = JSON.parse(result);
+              this.setState({
+                count : responseEventMessage.count,
+                eventMessages : responseEventMessage.eventMessages
+              })
+            }
+          )
+        })
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+    }
+  }
 
   state:State = {
-    count: this.props.session? this.props.session.eventMessage.count :0,
-    eventMessages:this.props.session?this.props.session.eventMessage.eventMessages:[],
+    count: 0,
+    eventMessages:[],
     anchorEl:null,
     anchorEl2:null,
     mobileMoreAnchorEl:null

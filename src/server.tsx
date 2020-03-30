@@ -37,15 +37,7 @@ function getSessionSetting(req: any){
     console.log('getMenuList api call!');
     result = ServerApiCall(null, '/account_page/page/' + sess.account.accountId, HTTPMethod.GET);
     sess.pages = result.pages;
-    result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
-    sess.eventMessage = result;
   } 
-}
-function refresheventMessage(req: any){
-  const sess = req.session as MySession;
-  let result = null;
-  result = ServerApiCall(null, '/eventMessage/' + sess.account.accountId, HTTPMethod.GET);
-    sess.eventMessage = result;
 }
 
 interface MySession extends Express.Session {
@@ -173,8 +165,24 @@ app.post('/selectId', (req, res) => {
   res.json(ServerApiCall(req, '/account/selectId/' + urlencode(req.body.name) + "/" + req.body.email
   , HTTPMethod.GET));
 });
+// 6. 계정 별 권한에 따른 허용하는 메뉴 리스트 조회
+app.post('/pageListByAccountId', (req, res) => {
+  const sess = req.session as MySession;
+  console.log('pageListByaccountId');
+  let result = ServerApiCall(null, '/account_page/page/' + sess.account.accountId, HTTPMethod.GET);
+  res.json(result);
+});
 
-// 6. 이벤트 메세지 확인
+
+// 7. 이벤트 메세지 조회
+app.post('/eventMessageList', (req, res) => {
+  const sess = req.session as MySession;
+  console.log('eventMessageList');
+  let result = ServerApiCall(req, '/eventMessage/' + sess.account.accountId , HTTPMethod.GET);
+  res.json(result);
+});
+
+// 8. 이벤트 메세지 확인
 app.put('/eventMessageCheck', (req, res) => {
   const sess = req.session as MySession;
   console.log('eventMessageCheck');
@@ -182,25 +190,23 @@ app.put('/eventMessageCheck', (req, res) => {
   sess.eventMessage = result;
   res.json(result);
 });
-//7. 관리자 페이지 - 계정관리 - 전체 회원 리스트 조회
+//9. 관리자 페이지 - 계정관리 - 전체 회원 리스트 조회
 app.post('/getAccountList', (req, res) => {
   console.log('getAccountList');
   let result = ServerApiCall(req, '/account', HTTPMethod.GET);
   console.log('getAccountList.result: ', result);
   res.json(result);
 });
-//8. 관리자 페이지 - 계정관리 - 회원 수정
+//10. 관리자 페이지 - 계정관리 - 회원 수정
 app.put('/accountUpdate', (req, res) => { 
   console.log("accountUpdate");
   let result = ServerApiCall(req, '/account/admin/'+ req.body.targetAccountId, HTTPMethod.PUT);
-  refresheventMessage(req);
   res.json(result);
 });
-//9. 관리자 페이지 - 계정관리 - 회원 삭제
+//11. 관리자 페이지 - 계정관리 - 회원 삭제
 app.delete('/accountDelete', (req, res) => {
   console.log("accountDelete: ", req.body);
   let result = ServerApiCall(req, '/account/admin/'+ req.body.accountId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
-  refresheventMessage(req);
   res.json(result);
 });
 

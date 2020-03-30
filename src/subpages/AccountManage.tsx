@@ -22,7 +22,7 @@ export interface AccountManageStates {
 }
 
 class AccountManage extends Component<AccountManageProps>{
-  componentWillMount () {
+  componentDidMount () {
     let jsonData = {
       method: 'POST',
       headers: {
@@ -56,7 +56,6 @@ class AccountManage extends Component<AccountManageProps>{
     ],
     dataList : []
   }
-
     render() {  
       const {session} = this.props;
       const tableContent = (
@@ -102,11 +101,10 @@ class AccountManage extends Component<AccountManageProps>{
                       })
                     });
                   }
-                }, 600);
+                }, 100);
               }),
             onRowDelete: (oldData) =>
               new Promise((resolve) => {
-                setTimeout(() => {
                   resolve();
                   this.setState((prevState:AccountManageStates) => {
                     oldData.targetAccountId = session.account.accountId;
@@ -138,7 +136,6 @@ class AccountManage extends Component<AccountManageProps>{
                       dataList : data
                     })
                   });
-                }, 600);
               }),
           }}
         />
