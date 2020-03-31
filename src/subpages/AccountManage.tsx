@@ -60,7 +60,7 @@ class AccountManage extends Component<AccountManageProps>{
       const {session} = this.props;
       const tableContent = (
         <MaterialTable
-          title="Account Management Page"
+          title="계정관리"
           columns={this.state.columns}
           data={this.state.dataList}
           editable={{

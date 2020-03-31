@@ -209,10 +209,34 @@ app.delete('/accountDelete', (req, res) => {
   let result = ServerApiCall(req, '/account/admin/'+ req.body.accountId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
   res.json(result);
 });
-// 8. 이벤트 메세지 확인
+// 12. 이벤트 메세지 확인
 app.post('/eventMessageListByAdmin', (req, res) => {
   console.log('eventMessageListByAdmin');
   let result = ServerApiCall(req, '/eventMessage', HTTPMethod.GET);
+  res.json(result);
+});
+// 13. 관리자 페이지 - 페이지관리 - 페이지 조회
+app.post('/pageList', (req, res) => {
+  console.log('pageList');
+  let result = ServerApiCall(req, '/page/admin', HTTPMethod.GET);
+  res.json(result);
+});
+//14. 관리자 페이지 - 페이지관리 - 페이지 등록
+app.post('/pageCreate', (req, res) => { 
+  console.log("pageCreate");
+  let result = ServerApiCall(req, '/page/admin/'+ req.body.targetAccountId, HTTPMethod.POST);
+  res.json(result);
+});
+//15. 관리자 페이지 - 페이지관리 - 페이지 수정
+app.put('/pageUpdate', (req, res) => { 
+  console.log("pageUpdate");
+  let result = ServerApiCall(req, '/page/admin/'+ req.body.targetAccountId, HTTPMethod.PUT);
+  res.json(result);
+});
+//16. 관리자 페이지 - 페이지관리 - 페이지 삭제
+app.delete('/pageDelete', (req, res) => {
+  console.log("pageDelete");
+  let result = ServerApiCall(req, '/page/admin/'+ req.body.pageId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
   res.json(result);
 });
 

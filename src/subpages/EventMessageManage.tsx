@@ -61,7 +61,7 @@ class EventMessageManage extends Component<EventMessageManageProps>{
     render() {  
       const tableContent = (
         <MaterialTable
-          title="EventMessage Management Page"
+          title="EventMessage관리"
           columns={this.state.columns}
           data={this.state.dataList}
         />
