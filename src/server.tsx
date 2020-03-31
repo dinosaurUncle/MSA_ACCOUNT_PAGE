@@ -124,20 +124,15 @@ app.listen(3003, () => console.log('Server started http://localhost:3003'));
  * 2019/12/30
  * API 통신 컨트롤러
  */
-
  // 1. 유효성검사
  app.post('/isId', (req, res) => {
   res.json(ServerApiCall(req, '/account/isId/' + req.body.id, HTTPMethod.GET));
 });
-
 // 2. 회원가입
 app.post('/createAcount', (req, res) => {
   console.log('test11');
   res.json(ServerApiCall(req, '/account', HTTPMethod.POST));
 });
-
-
-
 // 3. 로그인 
 app.post('/login', (req, res) => {
   let result = ServerApiCall(req, '/account/login', HTTPMethod.POST);
@@ -148,7 +143,6 @@ app.post('/login', (req, res) => {
   sess.account = result.account;
   res.json(result);
 });
-
 // 4. 로그아웃 
 app.post('/logout', (req, res) => {
   const sess = req.session as MySession;
@@ -157,8 +151,6 @@ app.post('/logout', (req, res) => {
   sess.pages = null;
   res.json(null);
 });
-
-
 // 5. 아이디 찾기
 app.post('/selectId', (req, res) => {
   console.log('selectId');
@@ -172,8 +164,6 @@ app.post('/pageListByAccountId', (req, res) => {
   let result = ServerApiCall(null, '/account_page/page/' + sess.account.accountId, HTTPMethod.GET);
   res.json(result);
 });
-
-
 // 7. 이벤트 메세지 조회
 app.post('/eventMessageList', (req, res) => {
   const sess = req.session as MySession;
@@ -181,7 +171,6 @@ app.post('/eventMessageList', (req, res) => {
   let result = ServerApiCall(req, '/eventMessage/' + sess.account.accountId , HTTPMethod.GET);
   res.json(result);
 });
-
 // 8. 이벤트 메세지 확인
 app.put('/eventMessageCheck', (req, res) => {
   const sess = req.session as MySession;
@@ -237,6 +226,30 @@ app.put('/pageUpdate', (req, res) => {
 app.delete('/pageDelete', (req, res) => {
   console.log("pageDelete");
   let result = ServerApiCall(req, '/page/admin/'+ req.body.pageId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
+  res.json(result);
+});
+// 17. 관리자 페이지 - 페이지관리 - 권한 조회
+app.post('/roleList', (req, res) => {
+  console.log('roleList');
+  let result = ServerApiCall(req, '/role/admin', HTTPMethod.GET);
+  res.json(result);
+});
+//18. 관리자 페이지 - 페이지관리 - 권한 등록
+app.post('/roleCreate', (req, res) => { 
+  console.log("roleCreate");
+  let result = ServerApiCall(req, '/role/admin/'+ req.body.targetAccountId, HTTPMethod.POST);
+  res.json(result);
+});
+//19. 관리자 페이지 - 페이지관리 - 권한 수정
+app.put('/roleUpdate', (req, res) => { 
+  console.log("roleUpdate");
+  let result = ServerApiCall(req, '/role/admin/'+ req.body.targetAccountId, HTTPMethod.PUT);
+  res.json(result);
+});
+//20. 관리자 페이지 - 페이지관리 - 권한 삭제
+app.delete('/roleDelete', (req, res) => {
+  console.log("roleDelete");
+  let result = ServerApiCall(req, '/role/admin/'+ req.body.roleId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
   res.json(result);
 });
 

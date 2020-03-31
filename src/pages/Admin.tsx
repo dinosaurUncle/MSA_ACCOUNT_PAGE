@@ -95,7 +95,7 @@ class Admin extends Component<AdminProps>{
           <PageManage session={session}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          <RoleManage/>
+          <RoleManage session={session}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
           <EventMessageManage/>
