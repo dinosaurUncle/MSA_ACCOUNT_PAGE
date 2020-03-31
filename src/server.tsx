@@ -209,4 +209,10 @@ app.delete('/accountDelete', (req, res) => {
   let result = ServerApiCall(req, '/account/admin/'+ req.body.accountId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
   res.json(result);
 });
+// 8. 이벤트 메세지 확인
+app.post('/eventMessageListByAdmin', (req, res) => {
+  console.log('eventMessageListByAdmin');
+  let result = ServerApiCall(req, '/eventMessage', HTTPMethod.GET);
+  res.json(result);
+});
 
