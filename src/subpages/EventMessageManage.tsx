@@ -7,7 +7,7 @@ interface Row {
   eventMessageType? : string
   evetnMessageTitle? : string
   eventMessageDescription? : string
-  isCheck? : boolean
+  check? : string
   date? : string
 }
 
@@ -53,7 +53,7 @@ class EventMessageManage extends Component<EventMessageManageProps>{
       { title: 'EventMessageType', field: 'eventMessageType'},
       { title: 'EventMessageTitle', field: 'eventMessageTitle'},
       { title: 'EventMessageDescription', field: 'eventMessageDescription'},
-      { title: 'IsCheck', field: 'isCheck'},
+      { title: 'IsCheck', field: 'check'},
       { title: 'Date', field: 'date'},
     ],
     dataList : []
