@@ -12,6 +12,7 @@ const Admin = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/A
 const SignUp = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SignUp'));
 const SearchPassword = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchPassword'));
 const SearchId = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/SearchId'));
+const MyAccount = loadable(() => import(/* webpackChunkName: "Window" */ '../pages/MyAccount'));
 
 const StyledMenuItem = (theme: Theme) =>
     createStyles({
@@ -35,6 +36,7 @@ class Body extends Component<BodyGridProps>{
 
 
   pageSelector(pageName: string, session: any){
+    console.log('pageName: ', pageName);
     let content: any = null;
     switch (pageName) {
       case "Home":
@@ -58,6 +60,9 @@ class Body extends Component<BodyGridProps>{
       case "Admin":    
         content = (<Admin session={session} />)
         break;
+      case "My Account":    
+        content = (<MyAccount session={session} />)
+        break;  
     }
     return content;
   }

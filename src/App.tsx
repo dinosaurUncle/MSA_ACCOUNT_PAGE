@@ -56,6 +56,7 @@ class App extends Component<AppProps> {
           {this.state.pages.map(({pageId, pageName, pageUrl, description}) =>(
             <Route key={pageId} exact path={pageUrl} render={() => <Window pageName={pageName} pageTitle={pageName} session={session} />} />
           ))}
+          <Route key="0" exact path="/myaccount" render={() => <Window pageName="My Account" pageTitle="My Account" session={session} />} />
       </Switch>;
       } 
     }

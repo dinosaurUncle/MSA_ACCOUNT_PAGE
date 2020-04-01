@@ -34,7 +34,7 @@ class Window extends Component<WindowProps>{
           <title>{title}</title>
         </Helmet>
           <Header title={pageTitle} isLoginPage={isLoginPage} session={session} /> 
-          <Body pageName={pageName} isLoginPage={isLoginPage} session={session} />
+            <Body pageName={pageName} isLoginPage={isLoginPage} session={session} />
           <Footer />
       </div>
     );

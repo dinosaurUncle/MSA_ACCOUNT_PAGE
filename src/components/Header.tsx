@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
@@ -86,7 +85,7 @@ export interface EventMessage {
   check?: boolean
 }
 
-export interface AppbarProps extends WithStyles<typeof styles> {
+export interface HeaderProps extends WithStyles<typeof styles> {
   isLogin?: boolean,
   isLoginPage?: boolean,
   title?: string,
@@ -99,7 +98,7 @@ function titleDiv(title?: string){
   </div>
 }
 
-class Appbar extends Component<AppbarProps> {
+class Header extends Component<HeaderProps> {
   componentDidMount () {
     if (this.props.session){
       let jsonData = {
@@ -160,6 +159,9 @@ class Appbar extends Component<AppbarProps> {
         .then(json => console.log(json))
         .catch(err => console.log(err));
     };
+    const goToMyAccount = () => {
+      window.location.replace("/myaccount");
+    }
     const menuId = 'primary-search-account-menu';
     const menu2Id = 'primary-search-account-menu';
     const isMenuOpen = Boolean(this.state.anchorEl);
@@ -249,7 +251,8 @@ class Appbar extends Component<AppbarProps> {
         onClose={handleProfileMenuClose}
       >
         <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem>
+        <MenuItem onClick={goToMyAccount}>My Account</MenuItem>
+        <MenuItem onClick={logout}>Log Out</MenuItem>
       </Menu>
     );
     let counter:number = 0;
@@ -375,7 +378,6 @@ class Appbar extends Component<AppbarProps> {
               <MoreIcon />
             </IconButton>
           </div>
-            <Button color="inherit" onClick={logout} >Log Out</Button>
         </Toolbar>
       </AppBar>
       
@@ -405,4 +407,4 @@ class Appbar extends Component<AppbarProps> {
   }
 }
 
-export default withStyles(styles)(Appbar);
+export default withStyles(styles)(Header);
