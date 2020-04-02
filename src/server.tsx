@@ -252,4 +252,10 @@ app.delete('/roleDelete', (req, res) => {
   let result = ServerApiCall(req, '/role/admin/'+ req.body.roleId+ '/' + req.body.targetAccountId, HTTPMethod.DELETE);
   res.json(result);
 });
+//21. MyAccount 계정상세정보 - 조회
+app.put('/accountDetail', (req, res) => { 
+  console.log("accountDetail");
+  let result = ServerApiCall(req, '/account/'+ req.body.accountId, HTTPMethod.GET);
+  res.json(result);
+});
 
