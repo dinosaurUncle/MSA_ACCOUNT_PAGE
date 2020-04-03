@@ -46,7 +46,9 @@ const styles = (theme: Theme) =>
 interface MyAccountProps extends WithStyles<typeof styles> {
   session? : any
 }
-interface MyAccountStates {}
+interface MyAccountStates {
+  account : Account
+}
 interface Account {
   accountId : string
   accountName? : string
@@ -60,37 +62,9 @@ interface Account {
 
 
 class MyAccount extends Component<MyAccountProps>{
-  componentDidMount () {
-    let convertJson : Account = {
-      accountId : this.props.session.account.accountId,
-    };
-    let jsonData = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      body: JSON.stringify(convertJson)};
-      fetch('/accountDetail', jsonData)
-      .then(res => {
-        res.json().then(
-          data => {
-            let result = JSON.stringify(data);
-            console.log(JSON.parse(result));
-            let responseAccount:Account = JSON.parse(result).account;
-            this.setState({
-              responseAccount
-            })
-          }
-        )
-      })
-      .then(json => console.log(json))
-      .catch(err => console.log(err));
-  }
 
-  state: Account = {
-    accountId : this.props.session.account.accountId,
-    targetAccountId : this.props.session.account.accountId
+  state: MyAccountStates = {
+    account:this.props.session.account
   }
   
   render() {  
@@ -98,31 +72,33 @@ class MyAccount extends Component<MyAccountProps>{
 
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>{
       let stateId: string = e.target.id;
+      let accountObj:Account = this.state.account;
+      
       switch (stateId){
         case "accountName" :
-          this.setState({
-            accountName : e.target.value
-          });
+          accountObj.accountName = e.target.value; 
           break;
         case "email" :
-          this.setState({
-            email : e.target.value
-          });
+          accountObj.email = e.target.value;
           break;
         case "phone" :
-          this.setState({
-            phone : e.target.value
-          });
+          accountObj.phone = e.target.value;
           break;      
       }
+      this.setState({
+        account : accountObj
+      });
       
     }
 
     const onSetValue = (e: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) =>{
       let stateName: string | undefined = e.target.name;
       if (!(stateName == undefined)){
+        let accountObj:Account = this.state.account;
+        let genderValue:any = e.target.value;;
+        accountObj.gender = genderValue;
         this.setState({
-          gender : e.target.value
+          account : accountObj
         });
       }
     }
@@ -133,12 +109,12 @@ class MyAccount extends Component<MyAccountProps>{
       e.preventDefault();
       console.log('this.state: ', this.state);
       let convertJson : Account = {
-        accountId : this.state.accountId,
-        accountName : this.state.accountName,
-        gender : this.state.gender,
-        email : this.state.email,
-        phone : this.state.phone,
-        targetAccountId : this.state.targetAccountId
+        accountId : this.state.account.accountId,
+        accountName : this.state.account.accountName,
+        gender : this.state.account.gender,
+        email : this.state.account.email,
+        phone : this.state.account.phone,
+        targetAccountId : this.state.account.accountId
       };
       console.log('convertJson: ', convertJson);
       let jsonData = {
@@ -149,13 +125,13 @@ class MyAccount extends Component<MyAccountProps>{
         },
         body: JSON.stringify(convertJson)};
         console.log(jsonData);
-        fetch('/accountUpdate', jsonData)
+        fetch('/eachAccountUpdate', jsonData)
         .then(res => {
           res.json().then(
             data => {
               let result = JSON.stringify(data);
               console.log(JSON.parse(result));
-              let account:Account = JSON.parse(result).account
+              let account:Account = JSON.parse(result)
               this.setState({account})
             }
           )
@@ -176,9 +152,9 @@ class MyAccount extends Component<MyAccountProps>{
             action={"/accountUpdate"} method="POST" onSubmit={onSubmit}>
               <div className={classes.innerForm}>
                 <div>
-                  <TextField required id="accountId" label="ID" defaultValue={this.state.accountId} onChange={onChange} disabled />
-                  <TextField required id="accountName" label="Name" defaultValue={this.state.accountName} onChange={onChange} />
-                  <TextField required id="email" label="Email" defaultValue={this.state.email} onChange={onChange} />
+                  <TextField required id="accountId" label="ID" defaultValue={this.state.account.accountId} onChange={onChange} disabled />
+                  <TextField required id="accountName" label="Name" defaultValue={this.state.account.accountName} onChange={onChange} />
+                  <TextField required id="email" label="Email" defaultValue={this.state.account.email} onChange={onChange} />
                 </div>
                 <div>
                   <FormControl className={classes.formControl}>
@@ -187,7 +163,7 @@ class MyAccount extends Component<MyAccountProps>{
                       labelId="demo-simple-select-label"
                       id="gender"
                       fullWidth
-                      value={this.state.gender}
+                      value={this.state.account.gender}
                       name="gender"
                       onChange={onSetValue}
                       >
@@ -195,7 +171,7 @@ class MyAccount extends Component<MyAccountProps>{
                       <MenuItem value={'FEMALE'}>여</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField required id="phone" label="Phone" defaultValue={this.state.phone} onChange={onChange} />
+                  <TextField required id="phone" label="Phone" defaultValue={this.state.account.phone} onChange={onChange} />
                   <Button
                     type="submit"
                     fullWidth

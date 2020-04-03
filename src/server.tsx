@@ -253,9 +253,11 @@ app.delete('/roleDelete', (req, res) => {
   res.json(result);
 });
 //21. MyAccount 계정상세정보 - 조회
-app.put('/accountDetail', (req, res) => { 
-  console.log("accountDetail");
-  let result = ServerApiCall(req, '/account/'+ req.body.accountId, HTTPMethod.GET);
-  res.json(result);
+app.put('/eachAccountUpdate', (req, res) => { 
+  const sess = req.session as MySession;
+  console.log("eachAccountUpdate");
+  let result = ServerApiCall(req, '/account/'+ req.body.accountId, HTTPMethod.PUT);
+  sess.account = result.account;
+  res.json(result.account);
 });
 
