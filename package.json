@@ -22,6 +22,7 @@
     "global": "^4.4.0",
     "http-method-enum": "^1.0.0",
     "material-table": "^1.57.2",
+    "mui-rte": "^1.15.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.12.0",

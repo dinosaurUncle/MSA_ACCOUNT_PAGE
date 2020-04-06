@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
 import MaterialTable, { Column } from 'material-table';
+import Modal from '@material-ui/core/Modal';
+import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+
+const useStyles = (theme: Theme) =>
+    createStyles({
+      paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
+    });
 
 interface Row {
   accountId? : string
@@ -11,18 +26,34 @@ interface Row {
   targetAccountId? : string
 }
 
-
-
-export interface AccountManageProps {
+export interface AccountManageProps extends WithStyles<typeof useStyles> {
   session?: any
 }
 export interface AccountManageStates {
   columns: Array<Column<Row>>
-  dataList: Row[];
+  dataList: Row[]
+  open: boolean
+  modalStyle : any
+  account? : Row
+}
+
+
+
+function getModalStyle() {
+  const top = 30;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
 }
 
 class AccountManage extends Component<AccountManageProps>{
-  componentDidMount () {
+
+  constructor(prop: any){
+    super(prop);
     let jsonData = {
       method: 'POST',
       headers: {
@@ -45,6 +76,11 @@ class AccountManage extends Component<AccountManageProps>{
       .then(json => console.log(json))
       .catch(err => console.log(err));
   }
+  componentDidMount(){
+    
+  }
+
+
   state : AccountManageStates = {
     columns : [
       { title: 'Id', field: 'accountId', editable: "never" },
@@ -54,15 +90,40 @@ class AccountManage extends Component<AccountManageProps>{
       { title: 'Email', field: 'email'},
       { title: 'Phone', field: 'phone'},
     ],
-    dataList : []
+    dataList : [],
+    open : false,
+    modalStyle : getModalStyle(),
+    account : {}
   }
     render() {  
-      const {session} = this.props;
+      const {session, classes} = this.props;
+      const handleOpen = () => {
+        this.setState({
+          open : true
+        })
+      }
+
+      const handleClose = () => {
+        this.setState({
+          open : false
+        })
+      }
+      
+
       const tableContent = (
         <MaterialTable
           title="계정관리"
           columns={this.state.columns}
           data={this.state.dataList}
+          onRowClick={(event, rowData, toggleDetailPanel) => {
+            console.log('event: ', event);
+            console.log('rowData: ', rowData);
+            console.log('toggleDetailPanel: ', toggleDetailPanel);
+            this.setState({
+              account : rowData
+            })
+            handleOpen()
+          }}
           editable={{
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve) => {
@@ -144,9 +205,20 @@ class AccountManage extends Component<AccountManageProps>{
       return (
         <div> 
             {tableContent}
+            <Modal
+            open={this.state.open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            ><div style={this.state.modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">{this.state.account? this.state.account.accountId : "지정된 아이디 없음"}</h2>
+            <p id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </p>
+          </div></Modal>
         </div>
       );
     }
   }
   
-  export default AccountManage;
+  export default withStyles(useStyles)(AccountManage);
