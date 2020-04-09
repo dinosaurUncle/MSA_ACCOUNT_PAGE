@@ -263,7 +263,7 @@ app.put('/eachAccountUpdate', (req, res) => {
 //22. account - role 맵핑 정보 받아오기
 app.post('/getAccountAndRoleList', (req, res) => { 
   console.log("getAccountAndRoleList");
-  let result = ServerApiCall(req, '/account_role/detail/'+ req.body.targetAccountId, HTTPMethod.POST);
+  let result = ServerApiCall(req, '/account_role/detail/'+ req.body.targetAccountId, HTTPMethod.GET);
   res.json(result);
 });
 

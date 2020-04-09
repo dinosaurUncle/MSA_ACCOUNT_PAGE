@@ -142,13 +142,14 @@ class AccountManage extends Component<AccountManageProps>{
           accountId : accountId,
           targetAccountId : accountId
         };
-        /*
+        
         let jsonData = {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
-          }};
+            },
+          body: JSON.stringify(convertJson)};
           fetch('/getAccountList', jsonData)
           .then(res => {
             res.json().then(
@@ -156,15 +157,13 @@ class AccountManage extends Component<AccountManageProps>{
                 let result = JSON.stringify(data);
                 console.log(JSON.parse(result));
                 let responseAccountList = JSON.parse(result);
-                this.setState({
-                  dataList : responseAccountList.accounts
-                })
+                
               }
             )
           })
           .then(json => console.log(json))
           .catch(err => console.log(err));
-          */
+          
       }
       
 
