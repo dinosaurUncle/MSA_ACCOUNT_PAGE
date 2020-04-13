@@ -57,6 +57,7 @@ export interface AccountManageStates {
   account? : Row
   columns2: Array<Column<Row2>>
   dataList2: Row2[]
+  hignLightData: string[]
 }
 
 
@@ -117,10 +118,11 @@ class AccountManage extends Component<AccountManageProps>{
     modalStyle : getModalStyle(),
     account : {},
     columns2 : [
-      { title: 'Id', field: 'accountId', editable: "never" },
-      { title: 'RoleId', field: 'roleId' }
+      { title: 'RoleId', field: 'roleId' },
+      { title: 'RoleName', field: 'roleName' }
     ],
     dataList2 : [],
+    hignLightData: [],
   }
     render() {  
       const {session, classes} = this.props;
@@ -150,14 +152,17 @@ class AccountManage extends Component<AccountManageProps>{
               'Content-Type': 'application/json'
             },
           body: JSON.stringify(convertJson)};
-          fetch('/getAccountList', jsonData)
+          fetch('/getAccountAndRoleList', jsonData)
           .then(res => {
             res.json().then(
               data => {
                 let result = JSON.stringify(data);
                 console.log(JSON.parse(result));
-                let responseAccountList = JSON.parse(result);
-                
+                let responseDetailInfoList = JSON.parse(result);
+                this.setState({
+                  dataList2 : responseDetailInfoList.roleList,
+                  hignLightData : responseDetailInfoList.hignLightData
+                })
               }
             )
           })
@@ -322,7 +327,10 @@ class AccountManage extends Component<AccountManageProps>{
               }),
           }}
         />
-            
+        {this.state.hignLightData[0] != "null" && <div style={{marginTop: 20, marginBottom: 20}}>
+          <TextField required id="phone" label="Phone" variant="outlined" defaultValue={this.state.account? this.state.account.phone : "지정된 전화번호 없음"} style={{marginRight : 10}} disabled />
+          <TextField required id="phone" label="Phone" variant="outlined" defaultValue={this.state.account? this.state.account.phone : "지정된 전화번호 없음"} style={{marginRight : 10}} disabled />
+        </div> }
           </div></Modal>
         </div>
       );
