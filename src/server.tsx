@@ -266,4 +266,10 @@ app.post('/getAccountAndRoleList', (req, res) => {
   let result = ServerApiCall(req, '/account_role/detail/'+ req.body.targetAccountId, HTTPMethod.GET);
   res.json(result);
 });
+//23. account - role 맵핑 저장
+app.post('/accountAndRoleInfoSave', (req, res) => { 
+  console.log("accountAndRoleInfoSave");
+  let result = ServerApiCall(req, '/account_role/'+ req.body.accountId + '/' + req.body.roleIds , HTTPMethod.POST);
+  res.json(result);
+});
 
