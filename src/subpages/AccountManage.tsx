@@ -436,6 +436,42 @@ class AccountManage extends Component<AccountManageProps>{
               new Promise((resolve) => {
                   resolve();
                   this.setState((prevState:AccountManageStates) => {
+                    console.log('oldData: ', oldData);
+                    console.log('account: ', this.state.account?this.state.account.accountId:'');
+                    const account:Row | undefined = this.state.account;
+                    let roleIds:string[] | undefined = [];
+                    let oldRoleId:string = '';
+                    if (oldData.roleId){
+                      oldRoleId = oldData.roleId;
+                    }
+                    
+                    roleIds.push(oldRoleId);
+                    let convertJson : MappingSubmitData = {
+                      accountId : account? account.accountId : '',
+                      roleIds : roleIds
+                    };
+                    console.log('convertJson: ', convertJson);
+                    
+                    let jsonData = {
+                      method: 'POST',
+                      headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(convertJson)};
+                      console.log(jsonData);
+                      fetch('/accountAndRoleInfoDelete', jsonData)
+                      .then(res => {
+                        res.json().then(
+                          data => {
+                            let result = JSON.stringify(data);
+                            console.log(JSON.parse(result));
+                            window.location.replace("/admin");
+                          }
+                        )
+                      })
+                      .then(json => console.log(json))
+                      .catch(err => console.log(err));
                   });
               }),
           }}

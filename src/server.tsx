@@ -272,4 +272,9 @@ app.post('/accountAndRoleInfoSave', (req, res) => {
   let result = ServerApiCall(req, '/account_role/'+ req.body.accountId + '/' + req.body.roleIds , HTTPMethod.POST);
   res.json(result);
 });
-
+//24. account - role 맵핑 삭제
+app.post('/accountAndRoleInfoDelete', (req, res) => { 
+  console.log("accountAndRoleInfoDelete");
+  let result = ServerApiCall(req, '/account_role/'+ req.body.accountId + '/' + req.body.roleIds , HTTPMethod.DELETE);
+  res.json(result);
+});
